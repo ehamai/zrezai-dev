@@ -1,0 +1,85 @@
+default:
+  deps:
+  - dev
+
+# Top level commands
+dev:
+  cmds:
+  - ^assets
+  - ^preview
+
+deploy:
+  cmds:
+  - ^build
+  - ^sync
+
+# Second level commands
+assets:
+  cmds:
+  - ^clean-static
+  - ^static-assets
+  - ^scss
+
+build:
+  cmds:
+  - ^clean-public
+  - ^assets
+  - ^hash
+  - ^hugo
+  - ^minify
+  - ^zipper
+
+# Atomic commands
+
+clean-public:
+  cmds:
+  - find public/ -mindepth 1 -delete
+
+clean-static:
+  cmds:
+  - find static/ -mindepth 1 -delete
+
+hash:
+  cmds:
+  - scattered -output data/assets.json -srcbasepath static *.css *.png *.js *.webp
+  generates:
+  - data/assets.json
+  sources:
+  - static/*
+
+hugo:
+  cmds:
+  - hugo
+
+minify:
+  cmds:
+  - minify -r public/ -o public/
+
+preview:
+  cmds:
+  - hugo server --buildDrafts
+
+scss:
+  cmds:
+  - mkdir -p static/css
+  - sassc -m -t compressed src/scss/site.scss static/css/site.css
+  - postcss --use autoprefixer -o static/css/site.css static/css/site.css
+  generates:
+  - static/css/*.css
+  sources:
+  - src/scss/*.scss
+
+static-assets:
+  cmds:
+  - mkdir -p static
+  - cp -R assets/ static
+
+sync:
+  cmds:
+  - 'rsync --verbose  --progress --stats --compress --rsh=/usr/bin/ssh --recursive
+    --times --perms --links --delete-during --exclude "*~" --exclude ".*" public/
+    myserver:/sites/epro'
+
+zipper:
+  cmds:
+  - monterey-jack public
