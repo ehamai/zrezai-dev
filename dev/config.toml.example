@@ -1,4 +1,4 @@
-baseURL =
+baseURL = "https://server.zrezai-dev.de/"
 DefaultContentLanguage = "de"
 languageCode = "de-de"
 title = "Zadjad Rezai."
