@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   blog_builder:
-    image: klakegg/hugo:latest
+    image: xcalizorz/hugo:1.0-alpine
     deploy:
       replicas: 1
       placement:
@@ -15,7 +15,8 @@ services:
       labels:
         - traefik.enable=false
     volumes:
-      - ./dev:/src
+      - ./dev:/tmp
+    command: hugo --minify --baseUrl https://server.zrezai-dev.de/
     networks:
       - web
 
@@ -38,7 +39,6 @@ services:
         max_attempts: 3
         window: 30s
       labels:
-        - com.centurylinklabs.watchtower.enable=true
         - traefik.enable=true
         - traefik.http.routers.blog.service=blogService
         - traefik.http.routers.blog.tls=true
@@ -49,7 +49,7 @@ services:
         - traefik.http.services.blogService.loadbalancer.passhostheader=true
         - traefik.http.services.blogService.loadbalancer.sticky.cookie=true
         - traefik.http.routers.blog.rule=Host(`server.zrezai-dev.de`)
-        - "traefik.http.routers.blog.middlewares=blogHeaders@file, simpleRatelimiter@file, simpleInflightreq@file"
+        - "traefik.http.routers.blog.middlewares=auth@file, blogHeaders@file, simpleRatelimiter@file, simpleInflightreq@file"
     depends_on:
       - blog_builder
     volumes:

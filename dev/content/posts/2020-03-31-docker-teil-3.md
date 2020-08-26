@@ -34,7 +34,7 @@ In <a rel="noreferrer noopener" aria-label="Teil-1 (öffnet in neuem Tab)" href=
   <mark>Das Problem ist, dass das gar nicht stimmt.</mark>
 </p>
 
-Docker ist zwar recht isoliert, jedoch nicht auf dem Level einer VM! In den aller meisten Fällen wird das auch unwichtig sein, aber es ist wichtig zu wissen, dass Docker **Linux**-Namespaces nutzt, um einen isolierten Prozess zu simulieren. 
+Docker ist zwar recht isoliert, jedoch nicht auf dem Level einer VM! In den aller meisten Fällen wird das auch unwichtig sein, aber es ist wichtig zu wissen, dass Docker **Linux**-Namespaces nutzt, um einen isolierten Prozess zu simulieren.
 
 Grundsätzlich sieht der Docker-Alltag so aus, dass ein Docker-Daemon gestartet wird und dieser u. a. für die Erstellung jener isolierten Prozesse zuständig ist. Auf Windows wird dieser Daemon ironischerweise in einer VM gestartet, da ein Linux-Kernel gebraucht wird, um Linux-Namespaces zu nutzen.
 
@@ -53,10 +53,10 @@ Zur Isolierung werden unter anderem folgende System-interne Möglichkeiten ausge
   >* chroot syscall — Controls the location of the filesystem root
   >* cgroups — Resource protection
   >* CAP drop — Operating system feature restrictions
-  >* Security modules — Mandatory access controls  
+  >* Security modules — Mandatory access controls
   > <br>‒ Docker in Action, Jeff Nickeloff & Stephan Kuenzli, Manning Publications 2019_
 
-Da Docker-Container keinen eigenen Kernel haben, nutzen sie immer den Host-Kernel, um Befehle an die Hardware zu leiten. Dadurch ist Docker nicht ganz so flexibel wie eine VM. Sollte beispielsweise eines der containerisierten Anwendungen eine ganz bestimmte Kernelversion brauchen, wird diese auch nur bei ganz bestimmten Anwendern funktionieren &#8211; da wäre wahrscheinlich die Nutzung einer VM anzuraten. 
+Da Docker-Container keinen eigenen Kernel haben, nutzen sie immer den Host-Kernel, um Befehle an die Hardware zu leiten. Dadurch ist Docker nicht ganz so flexibel wie eine VM. Sollte beispielsweise eines der containerisierten Anwendungen eine ganz bestimmte Kernelversion brauchen, wird diese auch nur bei ganz bestimmten Anwendern funktionieren &#8211; da wäre wahrscheinlich die Nutzung einer VM anzuraten.
 
 ## Erweitern der Flask API
 
@@ -310,13 +310,13 @@ Neu hier ist, dass wir unseren `RUN`-Befehl in einen Befehl gefasst haben, um m�
 
 Außerdem ist der `ENV`-Befehl neu. Dieser definiert Umgebungsvariablen &#8211; hier setzen wir unseren `PYTHONPATH` genau wie vorher auch.
 
-Docker erstellt aus Optimierungsgründen für jeden Befehl eine eigene Schicht (Layer) &#8211; ein isolierter Container, der nur diesen einen Schritt ausführt. Diese einzelnen Container sieht man auch im Buildprozess, siehe unten. 
+Docker erstellt aus Optimierungsgründen für jeden Befehl eine eigene Schicht (Layer) &#8211; ein isolierter Container, der nur diesen einen Schritt ausführt. Diese einzelnen Container sieht man auch im Buildprozess, siehe unten.
 
 <p>
   <mark>Nun starten wir den Buildprozess</mark>
 </p>
 
-`docker image build --tag xcalizorz/docker-example-restapi:1.1 .` 
+`docker image build --tag xcalizorz/docker-example-restapi:1.1 .`
 
 ```terminal
 Sending build context to Docker daemon  286.7kB
