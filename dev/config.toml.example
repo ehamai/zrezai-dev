@@ -1,0 +1,151 @@
+baseURL = "https://server.zrezai-dev.de/"
+DefaultContentLanguage = "de"
+languageCode = "de-de"
+title = "Zadjad Rezai."
+theme = "diary"
+
+
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = false
+    hl_Lines = ""
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = true
+    noClasses = true
+    style = "emacs"
+    tabWidth = 4
+  [markup.goldmark]
+    [markup.goldmark.extensions]
+      definitionList = true
+      footnote = true
+      linkify = true
+      strikethrough = true
+      table = true
+      taskList = true
+      typographer = true
+    [markup.goldmark.parser]
+      attribute = true
+      autoHeadingID = true
+      autoHeadingIDType = "github"
+    [markup.goldmark.renderer]
+      hardWraps = false
+      unsafe = true
+      xhtml = false
+  [markup.tableOfContents]
+    endLevel = 3
+    ordered = false
+    startLevel = 2
+
+[sitemap]
+  changefreq = "monthly"
+  filename = "sitemap.xml"
+  priority = 0.5
+
+[imaging]
+  # Default resample filter used for resizing. Default is Box,
+  # a simple and fast averaging filter appropriate for downscaling.
+  # See https://github.com/disintegration/imaging
+  resampleFilter = "box"
+
+  # Default JPEG quality setting. Default is 75.
+  quality = 75
+
+  # Anchor used when cropping pictures.
+  # Default is "smart" which does Smart Cropping, using https://github.com/muesli/smartcrop
+  # Smart Cropping is content aware and tries to find the best crop for each image.
+  # Valid values are Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight
+  anchor = "smart"
+
+  # Default background color.
+  # Hugo will preserve transparency for target formats that supports it,
+  # but will fall back to this color for JPEG.
+  # Expects a standard HEX color string with 3 or 6 digits.
+  # See https://www.google.com/search?q=color+picker
+  bgColor = "#ffffff"
+
+[params]
+  subtitle = "Softwareentwicklung- und Design."
+  DateForm = "02.01.2006"
+  enableReadingTime=true
+  favicon = "/img/favicon/favicon.ico"
+  mainvideo = "https://i.giphy.com/media/7GHRDluBmx9O8/giphy.webp"
+  description = "Ich bin ein Softwareentwickler mit Liebe zum Detail und komplexen Aufgaben. In meinem Blog schreibe ich über verschiedene Dinge aus dem IT-Umfeld."
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+[[menu.main]]
+  url = "/posts"
+  name = "Archiv"
+  weight = 1
+
+[[menu.main]]
+  url = "/categories"
+  name = "Kategorien"
+  weight = 2
+
+[[menu.main]]
+  url = "/tags"
+  name = "Tags"
+  weight = 3
+
+[[menu.main]]
+  url = "/index.xml"
+  name = "RSS Feed"
+  weight = 4
+
+[[menu.main]]
+  url = "/datenschutz"
+  name = "Datenschutz"
+  weight = 6
+
+[[menu.main]]
+  url = "/impressum"
+  name = "Impressum"
+  weight = 7
+
+[privacy]
+  [privacy.disqus]
+    disable = true
+  [privacy.googleAnalytics]
+    anonymizeIP = true
+    disable = true
+    respectDoNotTrack = true
+    useSessionStorage = true
+  [privacy.instagram]
+    disable = true
+    simple = false
+  [privacy.twitter]
+    disable = true
+    enableDNT = false
+    simple = false
+  [privacy.vimeo]
+    disable = true
+    simple = false
+  [privacy.youtube]
+    disable = true
+    privacyEnhanced = true
+
+[deployment]
+  # By default, files are uploaded in an arbitrary order.
+  # Files that match the regular expressions in the "Order" list
+  # will be uploaded first, in the listed order.
+  order = [".jpg$", ".webp$", ".gif$"]
+
+[[deployment.matchers]]
+  #  Cache static assets for 1 year.
+  pattern = "^.+\\.(js|css|svg|ttf)$"
+  cacheControl = "max-age=31536000, no-transform, public"
+  gzip = true
+
+[[deployment.matchers]]
+  pattern = "^.+\\.(png|jpg|webm|webp|gif)$"
+  cacheControl = "max-age=31536000, no-transform, public"
+  gzip = false
+
+[[deployment.matchers]]
+  pattern = "^.+\\.(html|xml|json)$"
+  gzip = true
