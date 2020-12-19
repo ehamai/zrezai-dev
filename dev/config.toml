@@ -1,7 +1,7 @@
 DefaultContentLanguage = "de"
 languageCode = "de-de"
 title = "Zadjad Rezai."
-theme = "diary"
+theme = "hugo-theme-diary"
 
 
 [markup]

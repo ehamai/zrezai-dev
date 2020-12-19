@@ -16,7 +16,7 @@ services:
         - traefik.enable=false
     volumes:
       - ./dev:/tmp
-    command: hugo --minify --baseUrl https://server.zrezai-dev.de/
+    command: hugo --minify --baseUrl https://server.zrezai-dev.de/ --destination html/server
     networks:
       - web
 

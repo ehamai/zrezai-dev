@@ -1,0 +1,743 @@
+<!doctype html><html><head><title>Projekt 1 - Docker Swarm, Traefik, Nextcloud und einiges mehr</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta content="telephone=no" name=format-detection><meta name=description content><meta name=renderer content="webkit"><meta name=theme-color content="#ffffff"><script src=/%20/vendor/js/jquery.min.js></script><script src=/%20/vendor/js/popper.min.js></script><script src=/%20/vendor/js/bootstrap.min.js></script><script src=/%20/vendor/js/smooth-scroll.polyfills.min.js></script><link type=text/css rel=stylesheet href=/%20/vendor/css/bootstrap.min.css><link rel=stylesheet type=text/css href=https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css><script src=/%20/vendor/js/vue.min.js></script><link rel=icon href=https://zrezai-dev.de/img/favicon/favicon.ico><link rel=stylesheet href=https://zrezai-dev.de/scss/journal.min.c116bc90d171283f099f173854157ec8f183f9073b93443b2c8ad82899ee9025.css integrity="sha256-wRa8kNFxKD8Jnxc4VBV+yPGD+Qc7k0Q7LIrYKJnukCU=" media=screen><link rel=stylesheet href=https://zrezai-dev.de/scss/dark-mode.min.552aae4638a84aa57cf0b195750a49ea9131d3bb621d1ed3ebc9b14b18166536.css integrity="sha256-VSquRjioSqV88LGVdQpJ6pEx07tiHR7T68mxSxgWZTY=" media=screen><script src=https://zrezai-dev.de//js/loadCSS.js></script><script>loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");</script><script src=https://zrezai-dev.de//js/toc-collapse.js></script></head><body><div id=app><div ref=sideContainer class=side-container><a class="a-block nav-head false" href=https://zrezai-dev.de/><div class=nav-title>Zadjad Rezai.</div><div class=nav-subtitle>Softwareentwicklung- und Design.</div></a><div class=nav-link-list><a class="a-block nav-link-item false" href=/posts>Archiv</a>
+<a class="a-block nav-link-item false" href=/categories>Kategorien</a>
+<a class="a-block nav-link-item false" href=/tags>Tags</a>
+<a class="a-block nav-link-item false" href=/index.xml>RSS Feed</a>
+<a class="a-block nav-link-item false" href=/datenschutz>Datenschutz</a>
+<a class="a-block nav-link-item false" href=/impressum>Impressum</a></div><div class=nav-footer>Hugo Theme <a href=https://github.com/amazingrise/hugo-theme-diary>Diary</a> von <a href=https://amazingrise.net>Rise</a> ❤️<br>Ported from <a href=https://mak1t0.cc/ target=_blank rel="noreferrer noopener">Makito</a>'s <a href=https://github.com/SumiMakito/hexo-theme-journal/ target=_blank rel="noreferrer noopener">Journal.</a><br><br><div style=font-size:20px><a href=https://github.com/Xcalizorz target=_blank rel="noreferrer noopener" class="fa fa-github"></a><a href=https://www.linkedin.com/in/zadjad-rezai/ target=_blank rel="noreferrer noopener" class="fa fa-linkedin"></a><a href=https://www.xing.com/profile/Zadjad_Rezai/ target=_blank rel="noreferrer noopener" class="fa fa-xing"></a></div>&copy;
+2020 Zadjad Rezai.
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css></div></div><div ref=extraContainer class=extra-container><div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }"><div class=toc-content><center>- INHALT -</center><ul><ul class=collapse data-toggle=collapse><li><a href=#einf%c3%bchrung onclick="onNavClick(`#einführung-nav`)" id=einführung-nav>Einführung</a></li><li><a href=#projektidee-und--ziel onclick="onNavClick(`#projektidee-und--ziel-nav`)" id=projektidee-und--ziel-nav>Projektidee und -ziel</a></li><li><a href=#dns-cloudflare onclick="onNavClick(`#dns-cloudflare-nav`)" id=dns-cloudflare-nav>DNS (Cloudflare)</a></li><ul class=collapse data-toggle=collapse><li><a href=#%c3%a4ndern-der-dns-eintr%c3%a4ge onclick="onNavClick(`#ändern-der-dns-einträge-nav`)" id=ändern-der-dns-einträge-nav>Ändern der DNS-Einträge</a></li></ul><li><a href=#proxy--edge-router onclick="onNavClick(`#proxy--edge-router-nav`)" id=proxy--edge-router-nav>Proxy / Edge router</a></li><li><a href=#installation onclick="onNavClick(`#installation-nav`)" id=installation-nav>Installation</a></li><ul class=collapse data-toggle=collapse><li><a href=#docker--docker-swarm onclick="onNavClick(`#docker--docker-swarm-nav`)" id=docker--docker-swarm-nav>Docker & Docker swarm</a></li></ul><li><a href=#docker-compose-dateien onclick="onNavClick(`#docker-compose-dateien-nav`)" id=docker-compose-dateien-nav>docker-compose Dateien</a></li><ul class=collapse data-toggle=collapse><li><a href=#webseite-hugo onclick="onNavClick(`#webseite-hugo-nav`)" id=webseite-hugo-nav>Webseite (Hugo)</a></li><li><a href=#nextcloud onclick="onNavClick(`#nextcloud-nav`)" id=nextcloud-nav>Nextcloud</a></li><ul class=collapse data-toggle=collapse><li><a href=#env-files onclick="onNavClick(`#env-files-nav`)" id=env-files-nav>Env. files</a></li></ul><li><a href=#traefik onclick="onNavClick(`#traefik-nav`)" id=traefik-nav>Traefik</a></li><ul class=collapse data-toggle=collapse><li><a href=#docker-composeyaml onclick="onNavClick(`#docker-composeyaml-nav`)" id=docker-composeyaml-nav>docker-compose.yaml</a></li><li><a href=#traefiktoml onclick="onNavClick(`#traefiktoml-nav`)" id=traefiktoml-nav>traefik.toml</a></li></ul></ul><li><a href=#starten-der-services onclick="onNavClick(`#starten-der-services-nav`)" id=starten-der-services-nav>Starten der Services</a></li><ul class=collapse data-toggle=collapse><li><a href=#misc-automatisierung onclick="onNavClick(`#misc-automatisierung-nav`)" id=misc-automatisierung-nav>Misc (Automatisierung)</a></li></ul></div></div><div class=pagination><a id=globalBackToTop class="pagination-action animated-visibility" href=#top :class="{ invisible: scrollY == 0 }"><i class="material-icons pagination-action-icon">keyboard_arrow_up</i></a>
+<a class=pagination-action v-on:click=toggleDarkMode><i class="material-icons pagination-action-icon" v-if=isDarkMode>brightness_4</i>
+<i class="material-icons pagination-action-icon" v-else=isDarkMode>brightness_7</i></a></div></div><div class=single-column-drawer-container ref=drawer v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }"><div class=drawer-content><div class=drawer-menu><a class="a-block drawer-menu-item false" href=/posts>Archiv</a>
+<a class="a-block drawer-menu-item false" href=/categories>Kategorien</a>
+<a class="a-block drawer-menu-item false" href=/tags>Tags</a>
+<a class="a-block drawer-menu-item false" href=/index.xml>RSS Feed</a>
+<a class="a-block drawer-menu-item false" href=/datenschutz>Datenschutz</a>
+<a class="a-block drawer-menu-item false" href=/impressum>Impressum</a><div class=toc><div class=toc-content><center>- INHALT -</center><ul><ul class=collapse data-toggle=collapse><li><a href=#einf%c3%bchrung onclick="onNavClick(`#einführung-nav`)" id=einführung-nav>Einführung</a></li><li><a href=#projektidee-und--ziel onclick="onNavClick(`#projektidee-und--ziel-nav`)" id=projektidee-und--ziel-nav>Projektidee und -ziel</a></li><li><a href=#dns-cloudflare onclick="onNavClick(`#dns-cloudflare-nav`)" id=dns-cloudflare-nav>DNS (Cloudflare)</a></li><ul class=collapse data-toggle=collapse><li><a href=#%c3%a4ndern-der-dns-eintr%c3%a4ge onclick="onNavClick(`#ändern-der-dns-einträge-nav`)" id=ändern-der-dns-einträge-nav>Ändern der DNS-Einträge</a></li></ul><li><a href=#proxy--edge-router onclick="onNavClick(`#proxy--edge-router-nav`)" id=proxy--edge-router-nav>Proxy / Edge router</a></li><li><a href=#installation onclick="onNavClick(`#installation-nav`)" id=installation-nav>Installation</a></li><ul class=collapse data-toggle=collapse><li><a href=#docker--docker-swarm onclick="onNavClick(`#docker--docker-swarm-nav`)" id=docker--docker-swarm-nav>Docker & Docker swarm</a></li></ul><li><a href=#docker-compose-dateien onclick="onNavClick(`#docker-compose-dateien-nav`)" id=docker-compose-dateien-nav>docker-compose Dateien</a></li><ul class=collapse data-toggle=collapse><li><a href=#webseite-hugo onclick="onNavClick(`#webseite-hugo-nav`)" id=webseite-hugo-nav>Webseite (Hugo)</a></li><li><a href=#nextcloud onclick="onNavClick(`#nextcloud-nav`)" id=nextcloud-nav>Nextcloud</a></li><ul class=collapse data-toggle=collapse><li><a href=#env-files onclick="onNavClick(`#env-files-nav`)" id=env-files-nav>Env. files</a></li></ul><li><a href=#traefik onclick="onNavClick(`#traefik-nav`)" id=traefik-nav>Traefik</a></li><ul class=collapse data-toggle=collapse><li><a href=#docker-composeyaml onclick="onNavClick(`#docker-composeyaml-nav`)" id=docker-composeyaml-nav>docker-compose.yaml</a></li><li><a href=#traefiktoml onclick="onNavClick(`#traefiktoml-nav`)" id=traefiktoml-nav>traefik.toml</a></li></ul></ul><li><a href=#starten-der-services onclick="onNavClick(`#starten-der-services-nav`)" id=starten-der-services-nav>Starten der Services</a></li><ul class=collapse data-toggle=collapse><li><a href=#misc-automatisierung onclick="onNavClick(`#misc-automatisierung-nav`)" id=misc-automatisierung-nav>Misc (Automatisierung)</a></li></ul></div></div></div></div></div><transition name=fade><div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if=isDrawerOpen v-on:click=toggleDrawer></div></transition><nav ref=navBar class="navbar sticky-top navbar-light single-column-nav-container"><div ref=navBackground class=nav-background></div><div class="container container-narrow nav-content"><button id=nav_dropdown_btn class=nav-dropdown-toggle type=button v-on:click=toggleDrawer>
+<i class=material-icons>menu</i></button>
+<a ref=navTitle class=navbar-brand href=https://zrezai-dev.de/>Zadjad Rezai.</a>
+<button type=button class=nav-darkmode-toggle v-on:click=toggleDarkMode>
+<i class=material-icons v-if=isDarkMode>brightness_4</i>
+<i class=material-icons v-else=isDarkMode>brightness_7</i></button></div></nav><div class=single-column-header-container ref=pageHead v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }"><a href=https://zrezai-dev.de/><div class=single-column-header-title>Zadjad Rezai.</div><div class=single-column-header-subtitle>Softwareentwicklung- und Design.</div></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper style=background-image:url(https://zrezai-dev.de/img/projekt-1/header.svg)><div class=post-title>Projekt 1 - Docker Swarm, Traefik, Nextcloud und einiges mehr<div class=post-meta><time itemprop=datePublished>22.08.2020 08:29</time>
+<i class=material-icons>folder</i>
+<a href=/categories/>[Projekt]</a>
+&nbsp;
+<i class=material-icons>label</i>
+<a href=/tags/container>container</a>
+&nbsp;
+<a href=/tags/traefik>traefik</a>
+&nbsp;
+<a href=/tags/nextcloud>nextcloud</a>
+&nbsp;
+<a href=/tags/nginx>nginx</a>
+&nbsp;
+<i class=material-icons>schedule</i>
+19 min
+25 s.</div></div></div><div class=post-body-wrapper><div class=post-body v-pre><h2 id=einführung>Einführung</h2><p>Diese Webseite <a href=https://zrezai-dev.de>zrezai-dev.de</a> wird momentan über einen kleinen Provider names <code>wint.global</code> in die schöne, weite Welt übertragen. Dazwischen sitzt momentan <code>Cloudflare</code> als <code>nameserver</code> & damit kann ich direkt über <a href=dash.cloudflare.com>dash.cloudflare.com</a> auch auf meine DNS-Einträge zugreifen. So wird der gesamte Traffic durch Cloudflare geleitet (Proxy) und die &ldquo;echte&rdquo; IP-Adresse des Servers wird nicht bekannt gegeben.</p><p>Macht man ein <code>traceroute</code> oder <code>tracert</code> (Windows) auf <code>zrezai-dev.de</code> erhält man die IP-Adresse eines <code>Cloudflare</code>-Servers.</p><pre><code>▶ traceroute zrezai-dev.de
+traceroute: Warning: zrezai-dev.de has multiple addresses; using 104.31.93.242
+traceroute to zrezai-dev.de (104.31.93.242), 64 hops max, 52 byte packets
+ 1  fritz.box                                 (192.168.178.1)  3.652 ms  2.836 ms  3.249 ms
+ 2  lo1.pop107-asr.ipv4.wtnet.de              (_____________)  4.197 ms  4.061 ms  4.007 ms
+ 3  b107.graf-zahl.ipv4.wtnet.de              (_____________)  3.150 ms  4.047 ms  4.249 ms
+ 4  cloudflare.ham.ecix.net                   (193.42.155.58)  4.165 ms
+    ipv4.de-cix.ham.de.as13335.cloudflare.com (80.81.203.10)  4.115 ms  3.012 ms
+ 5  104.31.93.242                             (104.31.93.242)  4.388 ms  4.765 ms  3.415 ms
+
+</code></pre><p>Nun habe ich einen zweiten Server gemietet, möchte jedoch meine Domain weiterhin bei <code>wint.global</code> behalten.</p><h2 id=projektidee-und--ziel>Projektidee und -ziel</h2><p>Mein Ziel ist es, verschiedene <code>subdomains</code> unter meiner Domain <code>zrezai-dev.de</code> zu haben, die nicht auf den Server von <code>wint.global</code> verweisen, sondern auf den neuen Server bei einem anderen Anbieter.</p><p>Bei dem anderen Anbieter habe ich eine simplen VPS (Virtual Private Server). Wenn ich darauf z. B. eine Webseite hosten möchte, muss ich die nötigen Pakete installieren & die gesamte Konfiguration selbst machen.</p><p>Die simpelste Lösung verschiede Services unter einer Domain anzubieten, wäre einfach alles auf verschiedenen Ports laufen zu lassen - das ist aber meiner Meinung nach ziemlich unangenehm. &ldquo;Versteckte&rdquo; Services kann man ja so laufen lassen, aber sobald man z. B. <code>Nextcloud</code> nutzen möchte, macht es schon Sinn, dass die Domain dann auch <code>cloud.example.com</code> o. ä. heißt, anstatt <code>example.com:6464</code>.</p><p>Die Frage ist nun, wie kann ich am besten mehrere Subdomains mit der selben IP beliefern ohne kostenpflichtige Tools wie <code>Plex</code> zu nutzen?</p><h2 id=dns-cloudflare>DNS (Cloudflare)</h2><p>Ganz grob gesehen, sieht jede Anfrage eines Nutzers in etwa so aus:</p><p><img src=/img/projekt-1/hightlevel-overview-project-1.svg alt="High level overview" width=100% style=background-color:#fff></p><p>Der Nameserver, den ich momentan nutze, ist Cloudflare. Meine Domain
+ist bei <code>wint.global</code> registriert, jedoch verwalte ich alle DNS-Einträge über Cloudflare.</p><p>Daher würde ein Browser den Weg gehen, den wir oben via <code>traceroute</code> gegangen sind; von eurem <code>Endgerät -> Router -> Cloudflare -> Cloudflare Proxy</code>.</p><p>Dass die <code>Proxy</code> dann meinen Server kontaktiert, <code>Caching</code> und <code>DDOS-Sicherung</code> betreibt, bemerkt ein Endnutzer gar nicht. Ist ja auch eigentlich gar nicht wichtig.</p><p>Die Domain <code>zrezai-dev.de</code> wird über die Cloudflare Proxy in die große weite Welt geschickt,
+da die Einstellung in meinem Account so vorgenommen wurde.</p><p>Einige Subdomains jedoch werden auf einen anderen Server weitergeleitet - mein neuer VPS.
+Dieser benutzt Cloudflare nicht als Proxy - daher ist die IP auch bei einem <code>traceroute</code>
+direkt bekannt.</p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>▶ traceroute server.zrezai-dev.de
+traceroute to server.zrezai-dev.de <span style=color:#666>(</span>161.97.81.52<span style=color:#666>)</span>, <span style=color:#666>64</span> hops max, <span style=color:#666>52</span> byte packets
+ <span style=color:#666>1</span>  fritz.box                       <span style=color:#666>(</span>192.168.178.1<span style=color:#666>)</span>  3.114 ms  2.880 ms  2.165 ms
+ <span style=color:#666>2</span>  lo1.pop107-asr.ipv4.wtnet.de    <span style=color:#666>(</span>_________<span style=color:#666>)</span>  6.768 ms  4.007 ms  3.719 ms
+ <span style=color:#666>3</span>  b107.graf-zahl.ipv4.wtnet.de    <span style=color:#666>(</span>_________<span style=color:#666>)</span>  4.883 ms  6.003 ms  3.956 ms
+ <span style=color:#666>4</span>  b379.bert.ipv4.wtnet.de         <span style=color:#666>(</span>_________<span style=color:#666>)</span>  4.780 ms  9.000 ms  5.282 ms
+ <span style=color:#666>5</span>  ae60.edge1.hamburg1.level3.net  <span style=color:#666>(</span>62.67.25.117<span style=color:#666>)</span>  5.600 ms  6.018 ms  4.385 ms
+ <span style=color:#666>6</span>  * * *
+ <span style=color:#666>7</span>  * * *
+ <span style=color:#666>8</span>  vmd57207.contaboserver.net      <span style=color:#666>(</span>161.97.81.52<span style=color:#666>)</span>  17.931 ms !Z  17.919 ms !Z  17.092 ms !Z
+</code></pre></div><p>Wie man sieht, gehört der Server zu <code>contabo</code>.</p><h3 id=ändern-der-dns-einträge>Ändern der DNS-Einträge</h3><p>Im Normalfall haben wir die Möglichkeit unsere DNS-Einträge anzupassen.
+Da Cloudflare diese Aufgabe für mich übernimmt, tue ich das auch bei Cloudflare.</p><p>Dafür müssen wir mindestens einen <code>A</code>-Eintrag hinzufügen - dieser verweist eine <code>domain</code> auf eine <code>IPv4</code>-Adresse. Für <code>IPv6</code>-Weiterleitung benötigen wir noch einen <code>AAAA</code>-Eintrag.</p><p>Danach können wir <code>CNAME</code>-Einträge definieren, um z. B. <code>www.example.com</code> auf <code>example.com</code>
+weiterzuleiten.</p><p>So siehen z. B. die Einträge für <code>server.zrezai-dev.de</code> aus.</p><table><thead><tr><th>Type</th><th align=left>Name</th><th align=center>Inhalt</th><th align=right>TTL</th><th>Beschreibung</th></tr></thead><tbody><tr><td>A</td><td align=left>cloud</td><td align=center>161.97.81.52</td><td align=right>auto</td><td>cloud.zrezai-dev.de -> 161.97.81.52</td></tr><tr><td>AAAA</td><td align=left>cloud</td><td align=center>IPv6-Adresse..</td><td align=right>auto</td><td>cloud.zrezai-dev.de -> IPv6-Adresse</td></tr><tr><td>CNAME</td><td align=left>www.cloud</td><td align=center>cloud.zrezai-dev.de</td><td align=right>auto</td><td><a href=http://www.cloud.zrezai-dev.de>www.cloud.zrezai-dev.de</a> -> cloud.zrezai-dev.de -> 161.97.81.52</td></tr></tbody></table><p>Nachdem das ganze eingestellt ist, muss unser Server damit umgehen können.
+Die DNS-Einträge bringen alle Nutzer erstmal einfach direkt auf die IP unseres Servers - bis jetzt ist noch kein Service da.</p><p>Da der Browser bei <code>http</code>-Anfragen grundsätzlich auf Port <code>80</code> schaut & bei <code>https</code> auf Port <code>443</code>, würde ein Nutzer, der jetzt <code>https://server.zrezai-dev.de/</code> aufruft, einfach nach <code>161.97.81.52:443</code> geschickt werden.</p><p>Die offene Frage wäre jetzt:</p><p><mark><strong>Was machen wir, wenn wir noch weitere Subdomains haben, aber keine weiteren Server kaufen wollen?</strong> - Gleichzeitig, möchte ich immer Port 80 & 443 nutzen</mark></p><p>An einem Server, kann man nicht den selben Port doppelt belegen, daher muss ein <code>proxy</code> her.</p><h2 id=proxy--edge-router>Proxy / Edge router</h2><p>Es gibt einige gute Lösungen, die wir problemlos mit <code>docker</code> nutzen könnten. Folgende z. B.</p><ul><li><a href=http://www.haproxy.org/><code>HAProxy</code></a></li><li><a href=https://www.envoyproxy.io/><code>Envoy</code></a></li><li><a href=https://docs.traefik.io/><code>Traefik</code></a></li><li><a href=https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/><code>Nginx reverse-proxy</code></a></li></ul><p>Zuerst habe ich das Projekt mit <code>Nginx reverse-proxy</code> gelöst, aber mir gefiel die Anbindung an <code>Let's Encrypt</code> nicht und außerdem gibt es wenige Anpassungen, die ich am <code>reverse-proxy</code> hinzufügen konnte (ohne es unnötig komplex zu machen), weshalb ich mich für <code>Traefik</code> entschieden habe.</p><p>In naher Zukunft würden wir es aber höchstwahrscheinlich auf <code>Envoy</code> ummünzen, da es <a href=https://www.loggly.com/blog/benchmarking-5-popular-load-balancers-nginx-haproxy-envoy-traefik-and-alb/>im Benchmark</a> besser abgeschnitten hat.</p><p>Ein <code>reverse-proxy</code> - bzw. im Falle von <code>Traefik</code> ein <code>Edge Router</code> - beantwortet die große Frage von oben.</p><p>Alle Anfragen treffen zuerst auf <code>Traefik</code> & <code>Traefik</code> schaut sich dann die Domain an, bewertet wohin die Anfrage weitergeleitet werden soll und antwortet danach dem Nutzer.</p><figure><img src=https://docs.traefik.io/assets/img/traefik-architecture.png alt="my alt text"><figcaption>Traefik v2 Architektur (von https://docs.traefik.io/)</figcaption></figure><p>Ich nutze <code>Traefik</code> mit <code>Docker Swarm</code> um eine <code>Nextcloud</code>-Instanz und zwei Instanzen meiner Webseite zu erstellen. Die Instanzen der Webseite bekommen über den <code>Traefik</code>-Loadbalancer die passende Menge an Anfragen zugespielt.</p><p><code>Docker Swarm</code> hilft uns dabei immer eine bestimmte Menge an Instanzen zu haben - so wird sofort eine neue Instanz erstellt, sollte die alte Instanz kaputt gehen. Natürlich muss man darauf achten, dass ein Container niemals so wichtig ist, dass wir es nicht einfach wegwerfen können - <a href=https://devops.stackexchange.com/questions/653/what-is-the-definition-of-cattle-not-pets><code>Pets vs. Cattle</code></a>.</p><h2 id=installation>Installation</h2><h3 id=docker--docker-swarm>Docker & Docker swarm</h3><p>Ich denke mittlerweile sollten alle Docker installiert haben, falls nicht, dann einfach den Anweisungen hier folgen: <a href=https://docs.docker.com/get-docker/>https://docs.docker.com/get-docker/</a>)</p><p><code>Docker swarm</code> kann man nutzen, wenn man möchte - muss man aber nicht! Falls also keine Replicas o. ä. benutzt werden sollen, reicht es einfach <code>Docker</code> im normalen Modus zu belassen.</p><p>Hier die aktuelle Dokumentation dazu: <a href=https://docs.docker.com/engine/swarm/swarm-mode/>https://docs.docker.com/engine/swarm/swarm-mode/</a></p><p>Grundsätzlich, muss man nur folgenden Befehl eingeben & sich den Token irgendwo aufschreiben.</p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>  docker swarm init
+</code></pre></div><p>Sollte man mehrere Nodes haben, kann man über</p><pre><code>  docker swarm join --token ${TOKEN} ${IP}:${PORT}
+</code></pre><p>dem <code>swarm</code> beitreten.</p><h2 id=docker-compose-dateien>docker-compose Dateien</h2><p>Grundsätzlich sieht mein Ordneraufbau so aus:</p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>.
+|____traefik
+| |____providers
+| | |____file-provider.toml
+| |____traefik.toml
+| |____passwordfile
+| |____tls.env
+| |____Readme.md
+| |____acme.json
+| |____docker-compose.yaml
+|
+|____zrezai-dev
+| |____dev
+| | |____...
+| | |____...
+| |____Dockerfile.Hugo
+| |____docker-compose.yaml
+|
+|____nexworking
+| |____db.env
+| |____redis.env
+| |____nextcloud.env
+| |____docker-compose.yaml
+|
+|____Taskfile.yml
+</code></pre></div><p><code>nexworking</code> steht für <code>Nextcloud</code>. In den nächstne Schritten gehen wir einmal alle Daten durch.</p><p>Der Gesamtaufbau sieht in etwa so aus:</p><p><img src=/img/projekt-1/header.svg alt="Traefik high level overview" width=100% style=background-color:#fff></p><h3 id=webseite-hugo>Webseite (Hugo)</h3><p>Für meine Webseite nutze ich Hugo, falls ihr etwas anderes benutzt, muss hier natürlich eines angepasst werden. Wenn ihr nur statisches <code>html</code> habt, könnt ihr eigentlich alles genau so kopieren - nur der <code>blog_builder</code> ist dann nicht mehr nötig.</p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-dockerfile data-lang=dockerfile><span style=color:#a2f;font-weight:700>ARG</span> <span style=color:#b8860b>ALPINE_VERSION</span><span style=color:#666>=</span><span style=color:#666>3</span>.12<span>
+</span><span>
+</span><span></span><span style=color:#a2f;font-weight:700>FROM</span><span style=color:#b44> alpine:${ALPINE_VERSION} as hugobase</span><span>
+</span><span>
+</span><span></span><span style=color:#a2f;font-weight:700>ENV</span> <span style=color:#b8860b>HUGO_VERSION</span><span style=color:#666>=</span><span style=color:#666>0</span>.74.3<span>
+</span><span>
+</span><span></span><span style=color:#a2f;font-weight:700>WORKDIR</span><span style=color:#b44> /tmp</span><span>
+</span><span></span><span style=color:#a2f;font-weight:700>VOLUME</span> [ <span style=color:#b44>&#34;/tmp&#34;</span> ]<span>
+</span><span>
+</span><span></span><span style=color:#080;font-style:italic># Install HUGO</span><span>
+</span><span></span><span style=color:#a2f;font-weight:700>RUN</span> <span style=color:#a2f>set</span> -x <span style=color:#b62;font-weight:700>\
+</span><span style=color:#b62;font-weight:700></span>  <span style=color:#666>&amp;&amp;</span> apk add --update wget ca-certificates libstdc++ libc6-compat <span style=color:#b62;font-weight:700>\
+</span><span style=color:#b62;font-weight:700></span>  <span style=color:#666>&amp;&amp;</span> wget -q -O hugo.tar.gz https://github.com/gohugoio/hugo/releases/download/v<span style=color:#b68;font-weight:700>${</span><span style=color:#b8860b>HUGO_VERSION</span><span style=color:#b68;font-weight:700>}</span>/hugo_extended_<span style=color:#b68;font-weight:700>${</span><span style=color:#b8860b>HUGO_VERSION</span><span style=color:#b68;font-weight:700>}</span>_Linux-64bit.tar.gz <span style=color:#b62;font-weight:700>\
+</span><span style=color:#b62;font-weight:700></span>  <span style=color:#666>&amp;&amp;</span> tar xzf hugo.tar.gz hugo <span style=color:#b62;font-weight:700>\
+</span><span style=color:#b62;font-weight:700></span>  <span style=color:#666>&amp;&amp;</span> mv hugo /usr/bin <span style=color:#b62;font-weight:700>\
+</span><span style=color:#b62;font-weight:700></span>  <span style=color:#080;font-style:italic>## Cleanup</span><span>
+</span><span></span>  <span style=color:#666>&amp;&amp;</span> rm -r hugo.tar.gz <span style=color:#b62;font-weight:700>\
+</span><span style=color:#b62;font-weight:700></span>  <span style=color:#666>&amp;&amp;</span> apk del wget ca-certificates <span style=color:#b62;font-weight:700>\
+</span><span style=color:#b62;font-weight:700></span>  <span style=color:#666>&amp;&amp;</span> rm /var/cache/apk/*<span>
+</span></code></pre></div><p>Das Dockerfile ist recht minimalistisch - basierend auf Alpine, wird nur die aktuelle Version von <code>Hugo</code> heruntergeladen und kann dann ausgeführt werden.</p><p>Als <code>Volume</code> definiere ich hier <code>/tmp</code> - darin können wir mit der <code>docker-compose</code> unsere Datein mounten & dann mit dem <code>hugo</code>-command statische <code>html</code>-Dateien erstellen.</p><p>Das Image ist im Dockerhub hochgeladen und als <code>xcalizorz:hugo:1.0-alpine</code> veröffentlicht - so können wir es mir <code>Docker Swarm</code> oder <code>Kubernetes</code> nutzen.</p><p>Im nächsten Schritt beschreiben wir unsere <code>docker-compose.yaml</code></p><p><strong>blog_builder</strong></p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#a2f;font-weight:700>version</span>:<span style=color:#bbb> </span><span style=color:#b44>&#34;3.8&#34;</span><span style=color:#bbb>
+</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#a2f;font-weight:700>services</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#a2f;font-weight:700>blog_builder</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>image</span>:<span style=color:#bbb> </span>xcalizorz/hugo:<span style=color:#666>1.0</span>-alpine<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>deploy</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>replicas</span>:<span style=color:#bbb> </span><span style=color:#666>1</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>placement</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>max_replicas_per_node</span>:<span style=color:#bbb> </span><span style=color:#666>1</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>update_config</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>parallelism</span>:<span style=color:#bbb> </span><span style=color:#666>1</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>delay</span>:<span style=color:#bbb> </span>10s<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>restart_policy</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>condition</span>:<span style=color:#bbb> </span>none<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>labels</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.enable=<span style=color:#a2f;font-weight:700>false</span><span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>volumes</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- ./dev:/tmp<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>command</span>:<span style=color:#bbb> </span>hugo<span style=color:#bbb> </span>--minify<span style=color:#bbb> </span>--baseUrl<span style=color:#bbb> </span>https://server.zrezai-dev.de/<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>networks</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- web<span style=color:#bbb>
+</span><span style=color:#bbb>
+</span><span style=color:#bbb>    </span>...<span style=color:#bbb>
+</span><span style=color:#bbb>    </span>..<span style=color:#bbb>
+</span><span style=color:#bbb>    </span>.<span style=color:#bbb>
+</span></code></pre></div><p>Der erste Service ist der <code>blog_builder</code>, mit dem gegebenen Command <code>hugo --minify --baseUrl https://server.zrezai-dev.de/</code> werden alle <code>html</code>-Dateien erstellt und unter dem Ordner <code>public</code> abgeworfen. So können dann andere Services auf den Ordner <code>public</code> zugreifen, um dessen Inhalt zu veröffentlichen.</p><p>Die Labels sind hier eigentlich unwichtig, da bei beiden einfach gesagt wird <em>bitte ignorieren</em>. Dieser Service ist kurzlebig & endet, sobald der <code>hugo</code>-Befehl beendet wurde.</p><p><strong>blog</strong></p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#bbb>  </span>...<span style=color:#bbb>
+</span><span style=color:#bbb>  </span>..<span style=color:#bbb>
+</span><span style=color:#bbb>  </span>.<span style=color:#bbb>
+</span><span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#a2f;font-weight:700>blog</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>image</span>:<span style=color:#bbb> </span>nginx:alpine<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>deploy</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>replicas</span>:<span style=color:#bbb> </span><span style=color:#666>2</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>placement</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># sinnvoll bei vielen nodes &amp; replicas</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>max_replicas_per_node</span>:<span style=color:#bbb> </span><span style=color:#666>2</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>resources</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># es ist besonders wichtig resourcen einzuschränken</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>limits</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>          </span><span style=color:#a2f;font-weight:700>cpus</span>:<span style=color:#bbb> </span><span style=color:#b44>&#39;0.05&#39;</span><span style=color:#bbb>
+</span><span style=color:#bbb>          </span><span style=color:#a2f;font-weight:700>memory</span>:<span style=color:#bbb> </span>50M<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>update_config</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># updates immer nur nacheinander &amp; mit 10 sek. Wartezeit</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>parallelism</span>:<span style=color:#bbb> </span><span style=color:#666>1</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>delay</span>:<span style=color:#bbb> </span>10s<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>restart_policy</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>condition</span>:<span style=color:#bbb> </span>on-failure<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>delay</span>:<span style=color:#bbb> </span>5s<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>max_attempts</span>:<span style=color:#bbb> </span><span style=color:#666>3</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>window</span>:<span style=color:#bbb> </span>30s<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>labels</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># traefik wird diesen Service beachten/einbinden</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.enable=<span style=color:#a2f;font-weight:700>true</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># Füge dem Router einen Service hinzu</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.routers.blog.service=blogService<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># Verlange tls-Verschlüsselung</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.routers.blog.tls=<span style=color:#a2f;font-weight:700>true</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># zrezaiResolver wird in der traefik-config definiert</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.routers.blog.tls.certresolver=zrezaiResolver<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># Die Außenwelt greift über Port 443 (websecure) auf diesen Service zu</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.routers.blog.entrypoints=websecure<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># Das Docker Netzwerk wird an traefik weitergegeben</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.docker.network=web<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># Da wir aktuell die simpelste Form von `nginx` nutzen, veröffentlichen wir nur auf Port 80 - `tls` etc. wird von `traefik` gemacht.</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.services.blogService.loadbalancer.server.port=<span style=color:#666>80</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.services.blogService.loadbalancer.passhostheader=<span style=color:#a2f;font-weight:700>true</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.services.blogService.loadbalancer.sticky.cookie=<span style=color:#a2f;font-weight:700>true</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># Die Domain, die hier her führen soll</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.routers.blog.rule=Host(`server.zrezai-dev.de`)<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># Alle Middlewares - werden bei Traefik definiert</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- <span style=color:#b44>&#34;traefik.http.routers.blog.middlewares=blogHeaders@file, simpleRatelimiter@file, simpleInflightreq@file&#34;</span><span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>depends_on</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- blog_builder<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>volumes</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#080;font-style:italic># Die generierten Daten unter `public` werden an nginx weitergegeben</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- ./dev/public:/usr/share/nginx/html<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>networks</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- web<span style=color:#bbb>
+</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#a2f;font-weight:700>networks</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#080;font-style:italic># Es wird ein overlay Netzwerk kreiert</span><span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#a2f;font-weight:700>web</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>driver</span>:<span style=color:#bbb> </span>overlay<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#080;font-style:italic># Wenn der Name fehlt, bekommt das Netzwerk einen Präfix!</span><span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>name</span>:<span style=color:#bbb> </span>web<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>driver_opts</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#080;font-style:italic># Das Netzwerk wird verschlüsselt</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>encrypted</span>:<span style=color:#bbb> </span><span style=color:#b44>&#34;true&#34;</span><span style=color:#bbb>
+</span></code></pre></div><p>Resourcen einzuschränken ist enorm wichtig. Sollte es z. B. jemals dazu kommen, dass eines der Container eingenommen wird & man nicht automatisiert oder sofort reagiert, könnte der Container die gesamten Resourcen des Servers auffressen.</p><p>In weiteren Posts werde ich mich etwas mehr mit Sicherheit befassen.
+Grundsätzlich sind die Dinge, die wir jetzt sehen nicht unbedingt super &ldquo;unsicher&rdquo;, da alles auf isolierten Containern basiert und wir auf viele best practices achten, aber es geht natürlich immer besser.</p><p>Weitere Daten brauchen wir für den Blog nicht.</p><h3 id=nextcloud>Nextcloud</h3><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#a2f;font-weight:700>version</span>:<span style=color:#bbb> </span><span style=color:#b44>&#34;3.8&#34;</span><span style=color:#bbb>
+</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#a2f;font-weight:700>services</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#a2f;font-weight:700>db</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>image</span>:<span style=color:#bbb> </span>postgres:alpine<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>deploy</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>replicas</span>:<span style=color:#bbb> </span><span style=color:#666>1</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>placement</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>max_replicas_per_node</span>:<span style=color:#bbb> </span><span style=color:#666>1</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>update_config</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>parallelism</span>:<span style=color:#bbb> </span><span style=color:#666>1</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>delay</span>:<span style=color:#bbb> </span>10s<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>restart_policy</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>condition</span>:<span style=color:#bbb> </span>on-failure<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>labels</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># traefik soll diesen Service ignorieren</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.enable=<span style=color:#a2f;font-weight:700>false</span><span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>volumes</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- nc_db:/var/lib/postgresql/data<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>env_file</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#080;font-style:italic># alle environment variablen sind in db.env definiert</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- db.env<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>networks</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- nextcloud<span style=color:#bbb>
+</span><span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#a2f;font-weight:700>nc_redis</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>image</span>:<span style=color:#bbb> </span>redis:alpine<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>deploy</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>replicas</span>:<span style=color:#bbb> </span><span style=color:#666>1</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>placement</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>max_replicas_per_node</span>:<span style=color:#bbb> </span><span style=color:#666>1</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>update_config</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>parallelism</span>:<span style=color:#bbb> </span><span style=color:#666>1</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>delay</span>:<span style=color:#bbb> </span>10s<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>restart_policy</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>condition</span>:<span style=color:#bbb> </span>on-failure<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>labels</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># traefik soll diesen Service ignorieren</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.enable=<span style=color:#a2f;font-weight:700>false</span><span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>ports</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- <span style=color:#666>6379</span><span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>volumes</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- nc_redis:/data<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- /etc/localtime:/etc/localtime:ro<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>networks</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- nextcloud<span style=color:#bbb>
+</span><span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#a2f;font-weight:700>nextcloud</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>image</span>:<span style=color:#bbb> </span>nextcloud:apache<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#080;font-style:italic># für Apache</span><span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>hostname</span>:<span style=color:#bbb> </span>cloud.zrezai-dev.de<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>deploy</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>replicas</span>:<span style=color:#bbb> </span><span style=color:#666>1</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>placement</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>max_replicas_per_node</span>:<span style=color:#bbb> </span><span style=color:#666>2</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>resources</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>limits</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>          </span><span style=color:#a2f;font-weight:700>cpus</span>:<span style=color:#bbb> </span><span style=color:#b44>&#39;0.50&#39;</span><span style=color:#bbb>
+</span><span style=color:#bbb>          </span><span style=color:#080;font-style:italic># Nextcloud hätte gerne 128MB bis 512MB RAM</span><span style=color:#bbb>
+</span><span style=color:#bbb>          </span><span style=color:#a2f;font-weight:700>memory</span>:<span style=color:#bbb> </span>512M<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>update_config</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>parallelism</span>:<span style=color:#bbb> </span><span style=color:#666>1</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>delay</span>:<span style=color:#bbb> </span>10s<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>restart_policy</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>condition</span>:<span style=color:#bbb> </span>on-failure<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>labels</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># traefik soll diesen service beachten</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.enable=<span style=color:#a2f;font-weight:700>true</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># es soll ein Zertifikat ausgestellt werden</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.routers.nextcloud.service=nextcloudService<span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.routers.nextcloud.tls=<span style=color:#a2f;font-weight:700>true</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.routers.nextcloud.tls.certresolver=zrezaiResolver<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># die Außenwelt greift über Port 443 (websecure) auf diesen Service zu</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.routers.nextcloud.entrypoints=websecure<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># das Docker Netzwerk wird an traefik weitergegeben</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.docker.network=nextcloud<span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.services.nextcloudService.loadbalancer.server.port=<span style=color:#666>80</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.services.nextcloudService.loadbalancer.passhostheader=<span style=color:#a2f;font-weight:700>true</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.services.nextcloudService.loadbalancer.sticky.cookie=<span style=color:#a2f;font-weight:700>true</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># Einstellungen damit caldav funktioniert</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.middlewares.nextcloud-caldav.redirectregex.permanent=<span style=color:#a2f;font-weight:700>true</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.middlewares.nextcloud-caldav.redirectregex.regex=^https://(.<span style=color:#080>*)/.well-known/(card|cal)dav</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.middlewares.nextcloud-caldav.redirectregex.replacement=https://$${<span style=color:#666>1</span>}/remote.php/dav/<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># alle Middlewares - werden bei Traefik definiert</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- <span style=color:#b44>&#34;traefik.http.routers.nextcloud.middlewares=nextcloud-caldav@docker, nextcloudHeaders@file, nextcloudRatelimiter@file&#34;</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># die Domain, die hier her führen soll</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.routers.nextcloud.rule=Host(`cloud.zrezai-dev.de`)<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>volumes</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- nextcloud:/var/www/html<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>env_file</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#080;font-style:italic># alle wichtigen env. variablen</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- db.env<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- redis.env<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- nextcloud.env<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>depends_on</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- db<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- nc_redis<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>networks</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- nextcloud<span style=color:#bbb>
+</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#a2f;font-weight:700>volumes</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#a2f;font-weight:700>nextcloud</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#a2f;font-weight:700>nc_db</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#a2f;font-weight:700>nc_redis</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#a2f;font-weight:700>networks</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#080;font-style:italic># es wird ein overlay Netzwerk kreiert</span><span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#a2f;font-weight:700>nextcloud</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>name</span>:<span style=color:#bbb> </span>nextcloud<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>driver</span>:<span style=color:#bbb> </span>overlay<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>driver_opts</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#080;font-style:italic># verschlüsselt</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>encrypted</span>:<span style=color:#bbb> </span><span style=color:#b44>&#34;true&#34;</span><span style=color:#bbb>
+</span><span style=color:#bbb>
+</span></code></pre></div><h4 id=env-files>Env. files</h4><p>Es gibt insgesamt drei <code>.env</code>-Dateien.</p><pre><code>|____nexworking
+| |____db.env
+| |____redis.env
+| |____nextcloud.env
+| |____docker-compose.yaml
+</code></pre><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ini data-lang=ini><span style=color:#080;font-style:italic># db.env</span>
+
+<span style=color:#b44>POSTGRES_PASSWORD</span><span style=color:#666>=</span><span style=color:#b44>SamplePassword123</span>
+<span style=color:#b44>POSTGRES_DB</span><span style=color:#666>=</span><span style=color:#b44>db_name</span>
+<span style=color:#b44>POSTGRES_USER</span><span style=color:#666>=</span><span style=color:#b44>db_user</span>
+<span style=color:#b44>POSTGRES_HOST</span><span style=color:#666>=</span><span style=color:#b44>nextcloud-stack_nc_db</span>
+</code></pre></div><p>Beim <code>POSTGRES_HOST</code> kommt es darauf an wie der Datenbank Service und der <code>docker swarm</code> stack heißt.</p><p>Bei mir heißt der Datenbank Service <code>nc_db</code> und der <code>stack</code> heißt <code>nextcloud-stack</code> -> <code>nextcloud-stack_nc_db</code></p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ini data-lang=ini><span style=color:#080;font-style:italic># redis.env</span>
+
+<span style=color:#b44>REDIS_HOST</span><span style=color:#666>=</span><span style=color:#b44>nextcloud-stack_nc_redis</span>
+</code></pre></div><p>Hier gilt das gleiche wie bei <code>POSTGRES_HOST</code></p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ini data-lang=ini><span style=color:#080;font-style:italic># nextcloud.env</span>
+
+<span style=color:#b44>NEXTCLOUD_ADMIN_USER</span><span style=color:#666>=</span><span style=color:#b44>admin</span>
+<span style=color:#b44>NEXTCLOUD_ADMIN_PASSWORD</span><span style=color:#666>=</span><span style=color:#b44>NextcloudPassword</span>
+<span style=color:#080;font-style:italic># alle Domänen mit Leerzeichen getrennt</span>
+<span style=color:#b44>NEXTCLOUD_TRUSTED_DOMAINS</span><span style=color:#666>=</span><span style=color:#b44>www.cloud.zrezai-dev.de cloud.zrezai-dev.de</span>
+
+<span style=color:#080;font-style:italic># wir wollen nur über https kommunizieren</span>
+<span style=color:#b44>OVERWRITEPROTOCOL</span><span style=color:#666>=</span><span style=color:#b44>https</span>
+
+<span style=color:#080;font-style:italic># hier kann man noch vielese mehr hinzufügen</span>
+<span style=color:#080;font-style:italic>## z. B. SMTP Server, um E-Mails zu versenden</span>
+<span style=color:#080;font-style:italic>## Gerne in die Nextcloud Doku. schauen</span>
+</code></pre></div><h3 id=traefik>Traefik</h3><p>Jetzt kommen wir zum aller wichtigsten.</p><pre><code>.
+|____traefik
+| |____providers
+| | |____file-provider.toml
+| |____traefik.toml
+| |____passwordfile
+| |____tls.env
+| |____acme.json
+| |____docker-compose.yaml
+</code></pre><p>Gehen wir schrittweise durch <code>docker-compose.yaml</code>, um zu verstehen wozu die ganzen anderen Daten gut sind.</p><h4 id=docker-composeyaml>docker-compose.yaml</h4><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#a2f;font-weight:700>version</span>:<span style=color:#bbb> </span><span style=color:#b44>&#34;3.8&#34;</span><span style=color:#bbb>
+</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#a2f;font-weight:700>services</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#a2f;font-weight:700>traefikRouter</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>image</span>:<span style=color:#bbb> </span>traefik:v2<span style=color:#666>.2</span><span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>depends_on</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- dockerproxy<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>deploy</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>placement</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>constraints</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>          </span><span style=color:#080;font-style:italic># traefik sollte auf der manager node laufen</span><span style=color:#bbb>
+</span><span style=color:#bbb>          </span>- node.role<span style=color:#bbb> </span>==<span style=color:#bbb> </span>manager<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#080;font-style:italic># aktuell möchte ich es nur einmal haben</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>replicas</span>:<span style=color:#bbb> </span><span style=color:#666>1</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>restart_policy</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>condition</span>:<span style=color:#bbb> </span>on-failure<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>delay</span>:<span style=color:#bbb> </span>5s<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>max_attempts</span>:<span style=color:#bbb> </span><span style=color:#666>3</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#a2f;font-weight:700>window</span>:<span style=color:#bbb> </span>30s<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>labels</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.enable=<span style=color:#a2f;font-weight:700>true</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.docker.network=traefik-network<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># das Dashboard soll unter `traefik.zrezai-dev.de` erreichbar sein</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.routers.traefikRouter.rule=Host(`traefik.zrezai-dev.de`)<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># entrypoint ist `traefik` (Port 8080)</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.routers.traefikRouter.entrypoints=traefik<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># ein Zertifikat soll erstellt werden</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.routers.traefikRouter.tls=<span style=color:#a2f;font-weight:700>true</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.routers.traefikRouter.tls.certresolver=zrezaiResolver<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># api@interal ist ein interner Service, den wir nutzen wollen</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.routers.traefikRouter.service=api@internal<span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># Alle middlewares - definition kommt gleich</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- <span style=color:#b44>&#34;traefik.http.routers.traefikRouter.middlewares=auth@file, simpleHeaders@file&#34;</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># dummy service für Swarm port detection. Der Port ist egal.</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- traefik.http.services.dummy-svc.loadbalancer.server.port=<span style=color:#666>9999</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span><span style=color:#080;font-style:italic># globaler redirect to https</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- <span style=color:#b44>&#34;traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)&#34;</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- <span style=color:#b44>&#34;traefik.http.routers.http-catchall.entrypoints=web&#34;</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- <span style=color:#b44>&#34;traefik.http.routers.http-catchall.middlewares=redirect-to-https&#34;</span><span style=color:#bbb>
+</span><span style=color:#bbb>        </span>- <span style=color:#b44>&#34;traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https&#34;</span><span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>ports</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#080;font-style:italic># wir wollen unter Port 80, 443 und 8080 kontaktiert werden (entrypoints)</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- <span style=color:#666>80</span>:<span style=color:#666>80</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- <span style=color:#666>443</span>:<span style=color:#666>443</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- <span style=color:#666>8080</span>:<span style=color:#666>8080</span><span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>volumes</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#080;font-style:italic># die Konfigurationsdatei für traefik</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- ./traefik.toml:/traefik.toml<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#080;font-style:italic># hierin werden die tls Zertifikate gespeichert</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- ./acme.json:/acme.json<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#080;font-style:italic># unser admin user &amp; gehashtes Password für das Dashbord</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- ./passwordfile:/var/passwordfile<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#080;font-style:italic># extra Konfigurationen (für z. B. Middlewares)</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- ./providers:/providers<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>env_file</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#080;font-style:italic># env. variablen für Cloudflare TLS (nicht nötig, wenn wir HTTP Verifikation nutzen)</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- ./tls.env<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>networks</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- traefik-network<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- web<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- nextcloud<span style=color:#bbb>
+</span><span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#080;font-style:italic># ein docker proxy - dieser ist von der Außenwelt nicht erreichbar</span><span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#080;font-style:italic># nur der dockerproxy hat Zugriff auf unseren Docker Socket (Sicherheitsrisiko)</span><span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#080;font-style:italic># Traefik greift über Anfragen auf diesen Container dann auf unser Socket zu</span><span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#080;font-style:italic># Sollte Traefik je angegriffen werden, ist es etwas schwieriger vollen</span><span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#080;font-style:italic># Zugriff auf unseren Docker Socket zu bekommen</span><span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#080;font-style:italic>##</span><span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#080;font-style:italic># Wenn jemand Zugriff auf Docker hat, hat er auch quasi vollen Zugriff</span><span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#080;font-style:italic># auf den Hostserver (!)</span><span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#a2f;font-weight:700>dockerproxy</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>environment</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>CONTAINERS</span>:<span style=color:#bbb> </span><span style=color:#666>1</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>NETWORKS</span>:<span style=color:#bbb> </span><span style=color:#666>1</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>SERVICES</span>:<span style=color:#bbb> </span><span style=color:#666>1</span><span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>TASKS</span>:<span style=color:#bbb> </span><span style=color:#666>1</span><span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>image</span>:<span style=color:#bbb> </span>tecnativa/docker-socket-proxy<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>labels</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- traefik.enable=<span style=color:#a2f;font-weight:700>true</span><span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>networks</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- traefik-network<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>ports</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- <span style=color:#666>2375</span><span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>volumes</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span>- /var/run/docker.sock:/var/run/docker.sock<span style=color:#bbb>
+</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#a2f;font-weight:700>networks</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#080;font-style:italic># Integration der beiden anderen Netzwerke</span><span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#080;font-style:italic># Traefik kann sonst nicht auf die Services darin zugreifen</span><span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#a2f;font-weight:700>web</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>external</span>:<span style=color:#bbb> </span><span style=color:#a2f;font-weight:700>true</span><span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#a2f;font-weight:700>nextcloud</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>external</span>:<span style=color:#bbb> </span><span style=color:#a2f;font-weight:700>true</span><span style=color:#bbb>
+</span><span style=color:#bbb>  </span><span style=color:#a2f;font-weight:700>traefik-network</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>driver</span>:<span style=color:#bbb> </span>overlay<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>name</span>:<span style=color:#bbb> </span>traefik-network<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#a2f;font-weight:700>driver_opts</span>:<span style=color:#bbb>
+</span><span style=color:#bbb>      </span><span style=color:#a2f;font-weight:700>encrypted</span>:<span style=color:#bbb> </span><span style=color:#b44>&#34;true&#34;</span><span style=color:#bbb>
+</span><span style=color:#bbb>
+</span></code></pre></div><h4 id=traefiktoml>traefik.toml</h4><p>Ich habe einige Kommentare entfernt, damit es nicht zu lang wird.</p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-toml data-lang=toml><span style=color:#080;font-style:italic>################################################################</span>
+<span style=color:#080;font-style:italic># Global configuration</span>
+<span style=color:#080;font-style:italic>################################################################</span>
+[global]
+  checkNewVersion = <span style=color:#a2f;font-weight:700>true</span>
+  sendAnonymousUsage = <span style=color:#a2f;font-weight:700>false</span>
+
+<span style=color:#080;font-style:italic>################################################################</span>
+<span style=color:#080;font-style:italic># Entrypoints configuration</span>
+<span style=color:#080;font-style:italic>################################################################</span>
+
+<span style=color:#080;font-style:italic># Entrypoints definition</span>
+<span style=color:#080;font-style:italic>#</span>
+<span style=color:#080;font-style:italic># Optional</span>
+<span style=color:#080;font-style:italic># Default:</span>
+[entryPoints]
+  [entryPoints.web]
+    address = <span style=color:#b44>&#34;:80&#34;</span>
+
+  [entryPoints.websecure]
+    address = <span style=color:#b44>&#34;:443&#34;</span>
+
+<span style=color:#080;font-style:italic>################################################################</span>
+<span style=color:#080;font-style:italic># Traefik logs configuration</span>
+<span style=color:#080;font-style:italic>################################################################</span>
+
+<span style=color:#080;font-style:italic># Traefik logs</span>
+<span style=color:#080;font-style:italic># Enabled by default and log to stdout</span>
+<span style=color:#080;font-style:italic>#</span>
+<span style=color:#080;font-style:italic># Optional</span>
+<span style=color:#080;font-style:italic>#</span>
+[log]
+  level = <span style=color:#b44>&#34;ERROR&#34;</span>
+
+<span style=color:#080;font-style:italic>################################################################</span>
+<span style=color:#080;font-style:italic># Access logs configuration</span>
+<span style=color:#080;font-style:italic>################################################################</span>
+
+<span style=color:#080;font-style:italic># Enable access logs</span>
+<span style=color:#080;font-style:italic># By default it will write to stdout and produce logs in the textual</span>
+<span style=color:#080;font-style:italic># Common Log Format (CLF), extended with additional fields.</span>
+<span style=color:#080;font-style:italic>#</span>
+<span style=color:#080;font-style:italic># Optional</span>
+<span style=color:#080;font-style:italic>#</span>
+[accessLog]
+
+<span style=color:#080;font-style:italic>################################################################</span>
+<span style=color:#080;font-style:italic># API and dashboard configuration</span>
+<span style=color:#080;font-style:italic>################################################################</span>
+
+<span style=color:#080;font-style:italic># Enable API and dashboard</span>
+[api]
+
+<span style=color:#080;font-style:italic>################################################################</span>
+<span style=color:#080;font-style:italic># Ping configuration</span>
+<span style=color:#080;font-style:italic>################################################################</span>
+
+<span style=color:#080;font-style:italic># Enable ping</span>
+[ping]
+
+<span style=color:#080;font-style:italic>################################################################</span>
+<span style=color:#080;font-style:italic># Docker configuration backend</span>
+<span style=color:#080;font-style:italic>################################################################</span>
+
+<span style=color:#080;font-style:italic># Enable Docker configuration backend</span>
+[providers.docker]
+
+  endpoint = <span style=color:#b44>&#34;tcp://dockerproxy:2375&#34;</span>
+  network = <span style=color:#b44>&#34;traefik-network&#34;</span>
+  swarmMode = <span style=color:#a2f;font-weight:700>true</span>
+  swarmModeRefreshSeconds = <span style=color:#b44>&#34;60s&#34;</span>
+  useBindPortIP = <span style=color:#a2f;font-weight:700>true</span>
+  exposedByDefault = <span style=color:#a2f;font-weight:700>false</span>
+
+<span style=color:#080;font-style:italic># Enable file configuration backend</span>
+[providers.file]
+  directory = <span style=color:#b44>&#34;/providers&#34;</span>
+
+<span style=color:#080;font-style:italic># Enable ACME (Let&#39;s Encrypt): automatic SSL.</span>
+[certificatesResolvers.zrezaiResolver.acme]
+  email = <span style=color:#b44>&#34;zadjad@zrezai-dev.de&#34;</span>
+  storage = <span style=color:#b44>&#34;acme.json&#34;</span>
+
+  <span style=color:#080;font-style:italic># CA server to use.</span>
+  <span style=color:#080;font-style:italic># Uncomment the line to use Let&#39;s Encrypt&#39;s staging server,</span>
+  <span style=color:#080;font-style:italic># leave commented to go to prod.</span>
+  <span style=color:#080;font-style:italic>#</span>
+  <span style=color:#080;font-style:italic># caServer = &#34;https://acme-staging-v02.api.letsencrypt.org/directory&#34;</span>
+  caServer = <span style=color:#b44>&#34;https://acme-v02.api.letsencrypt.org/directory&#34;</span>
+
+  <span style=color:#080;font-style:italic># KeyType to use.</span>
+  <span style=color:#080;font-style:italic>#</span>
+  <span style=color:#080;font-style:italic># Optional</span>
+  <span style=color:#080;font-style:italic># Default: &#34;RSA4096&#34;</span>
+  <span style=color:#080;font-style:italic>#</span>
+  <span style=color:#080;font-style:italic># Available values : &#34;EC256&#34;, &#34;EC384&#34;, &#34;RSA2048&#34;, &#34;RSA4096&#34;, &#34;RSA8192&#34;</span>
+  <span style=color:#080;font-style:italic>#</span>
+  keyType = <span style=color:#b44>&#34;RSA4096&#34;</span>
+
+  <span style=color:#080;font-style:italic># Use a TLS-ALPN-01 ACME challenge.</span>
+  <span style=color:#080;font-style:italic>#</span>
+  <span style=color:#080;font-style:italic># Optional (but recommended)</span>
+  <span style=color:#080;font-style:italic>#</span>
+  <span style=color:#080;font-style:italic># [certificatesResolvers.zrezaiResolver.acme.tlsChallenge]</span>
+
+  <span style=color:#080;font-style:italic># Use a HTTP-01 ACME challenge.</span>
+  <span style=color:#080;font-style:italic>#</span>
+  <span style=color:#080;font-style:italic># Optional</span>
+  <span style=color:#080;font-style:italic>#</span>
+  <span style=color:#080;font-style:italic># [certificatesResolvers.zrezaiResolver.acme.httpChallenge]</span>
+
+    <span style=color:#080;font-style:italic># EntryPoint to use for the HTTP-01 challenges.</span>
+    <span style=color:#080;font-style:italic>#</span>
+    <span style=color:#080;font-style:italic># Required</span>
+    <span style=color:#080;font-style:italic>#</span>
+    <span style=color:#080;font-style:italic># entryPoint = &#34;web&#34;</span>
+
+  <span style=color:#080;font-style:italic># Use a DNS-01 ACME challenge rather than HTTP-01 challenge.</span>
+  <span style=color:#080;font-style:italic># Note: mandatory for wildcard certificate generation.</span>
+  <span style=color:#080;font-style:italic>#</span>
+  <span style=color:#080;font-style:italic># Optional</span>
+  <span style=color:#080;font-style:italic>#</span>
+  [certificatesResolvers.zrezaiResolver.acme.dnsChallenge]
+    provider = <span style=color:#b44>&#34;cloudflare&#34;</span>
+</code></pre></div><p>Im groben sagen die Kommentare eigentlich schon alles.</p><p>Da meine DNS Cloudflare ist, habe ich als <code>let's encrypt</code>-challenge die <code>dnsChallenge</code> ausgewählt.</p><p>Falls ihr auch die den <code>acme</code>-test über <code>DNS</code> machen wollt, benötigt ihr eine <code>tls.env</code>, welche im aktuellen <code>docker-compose.yaml</code> angesprochen wird.</p><p>Die <code>tls.env</code> sieht wie folgt aus:</p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ini data-lang=ini><span style=color:#b44>CF_API_EMAIL</span><span style=color:#666>=</span><span style=color:#b44>zadjad@zrezai-dev.de</span>
+<span style=color:#b44>CF_ZONE_API_TOKEN</span><span style=color:#666>=</span>
+<span style=color:#b44>CF_DNS_API_TOKEN</span><span style=color:#666>=</span>
+</code></pre></div><p>Die <code>Zone</code> und <code>DNS</code> API muss im Cloudflare Dashboard mit folgenden Rechten erstellt werden:</p><table><thead><tr><th>Typ</th><th>Description</th></tr></thead><tbody><tr><td>CF_DNS_API_TOKEN</td><td>API token with DNS:Edit permission (since v3.1.0)</td></tr><tr><td>CF_ZONE_API_TOKEN</td><td>API token with Zone:Read permission (since v3.1.0)</td></tr></tbody></table><p>Weitere Informationen hier: <a href=https://go-acme.github.io/lego/dns/cloudflare/>https://go-acme.github.io/lego/dns/cloudflare/</a></p><p>Wenn man die überprüfung nicht über DNS machen will, können wir auch ganz einfach die <code>HTTP-01 ACME challenge</code> oder die <code>TLS-ALPN-01 ACME challenge</code> nutzen.</p><p>Bensonders interessant ist folgenden Teil der Konfiguration:</p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-toml data-lang=toml>
+<span style=color:#080;font-style:italic># Enable Docker configuration backend</span>
+[providers.docker]
+
+  endpoint = <span style=color:#b44>&#34;tcp://dockerproxy:2375&#34;</span>
+  network = <span style=color:#b44>&#34;traefik-network&#34;</span>
+  swarmMode = <span style=color:#a2f;font-weight:700>true</span>
+  swarmModeRefreshSeconds = <span style=color:#b44>&#34;60s&#34;</span>
+  useBindPortIP = <span style=color:#a2f;font-weight:700>true</span>
+  exposedByDefault = <span style=color:#a2f;font-weight:700>false</span>
+</code></pre></div><p>Da wir die <code>dockerproxy</code> nutzen, um unser Docker Socket nicht offen für den <code>traefik</code>-Container rumliegen zu lassen, müssen wir natürlich <code>traefik</code> sagen wo unser <code>docker endpoint</code> ist.</p><p><code>exposedByDefault</code> ist auf falsch gesetzt, damit <code>traefik</code> nicht alle Container <code>exposed</code>, sondern nur jene die wir über das <code>traefik.enabled</code>-label veröffentlichen wollen.</p><p>Der andere besonders wichtige Teil ist der <code>provider</code>. In <code>traefik</code> kann man außerhalb der Hauptkonfiguration, weitere Konfigurationen hinzufügen. Alle <code>middleware</code> Konfiguration müssen über <code>provider</code> geregelt werden.</p><p>Wir sagen in <code>traefik.toml</code>, dass wir im Ordner <code>providers</code> Extrakonfiguration haben:</p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-toml data-lang=toml><span style=color:#080;font-style:italic># Enable file configuration backend</span>
+[providers.file]
+  directory = <span style=color:#b44>&#34;/providers&#34;</span>
+</code></pre></div><p>Innerhalb dieses Ordners ist aktuell nur die <code>file-provider.toml</code>, jedoch können da viele weitere Konfigurationsdateien sein und alles wird normal eingelesen.</p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-toml data-lang=toml>[http.middlewares]
+  [http.middlewares.simpleRatelimiter.rateLimit]
+    average = <span style=color:#666>5</span>
+    period = <span style=color:#b44>&#34;1s&#34;</span>
+    burst = <span style=color:#666>50</span>
+  [http.middlewares.nextcloudRatelimiter.rateLimit]
+    average = <span style=color:#666>5</span>
+    period = <span style=color:#b44>&#34;1s&#34;</span>
+    burst = <span style=color:#666>150</span>
+  [http.middlewares.simpleInflightreq.inFlightReq]
+    amount = <span style=color:#666>50</span>
+  [http.middlewares.auth.basicAuth]
+    usersFile = <span style=color:#b44>&#34;/var/passwordfile&#34;</span>
+    removeheader = <span style=color:#a2f;font-weight:700>true</span>
+  [http.middlewares.blogHeaders.headers]
+    frameDeny = <span style=color:#a2f;font-weight:700>true</span>
+    sslRedirect = <span style=color:#a2f;font-weight:700>true</span>
+    accessControlAllowMethods= [<span style=color:#b44>&#34;GET&#34;</span>]
+    accessControlMaxAge = <span style=color:#666>100</span>
+    addVaryHeader = <span style=color:#a2f;font-weight:700>true</span>
+    stsSeconds = <span style=color:#666>31536000</span>
+    stsIncludeSubdomains = <span style=color:#a2f;font-weight:700>true</span>
+    stsPreload = <span style=color:#a2f;font-weight:700>true</span>
+    contentTypeNosniff = <span style=color:#a2f;font-weight:700>true</span>
+    browserXssFilter = <span style=color:#a2f;font-weight:700>true</span>
+    referrerPolicy = <span style=color:#b44>&#34;no-referrer&#34;</span>
+    featurePolicy = <span style=color:#b44>&#34;geolocation &#39;none&#39;; camera &#39;none&#39;; microphone &#39;none&#39;&#34;</span>
+    contentSecurityPolicy = <span style=color:#b44>&#34;&#34;&#34;
+</span><span style=color:#b44>      default-src &#39;self&#39; https;
+</span><span style=color:#b44>      script-src &#39;self&#39; &#39;unsafe-inline&#39; cdn.jsdelivr.net ajax.cloudflare.com;
+</span><span style=color:#b44>      style-src &#39;self&#39; &#39;unsafe-inline&#39; cdn.jsdelivr.net cdnjs.cloudflare.com fonts.googleapis.com;
+</span><span style=color:#b44>      font-src &#39;self&#39; cdnjs.cloudflare.com fonts.googleapis.com fonts.gstatic.com;
+</span><span style=color:#b44>      img-src &#39;self&#39; i.giphy.com;
+</span><span style=color:#b44>    &#34;&#34;&#34;</span>
+    [http.middlewares.blogHeaders.headers.customResponseHeaders]
+      Expect<span>-</span>CT = <span style=color:#b44>&#34;max-age=604800, enforce;&#34;</span>
+      X<span>-</span>Permitted<span>-</span>Cross<span>-</span>Domain<span>-</span>Policies = <span style=color:#b44>&#34;none&#34;</span>
+      server = <span style=color:#b44>&#34;Mein Server&#34;</span>
+  [http.middlewares.nextcloudHeaders.headers]
+    sslRedirect = <span style=color:#a2f;font-weight:700>true</span>
+    accessControlMaxAge = <span style=color:#666>100</span>
+    addVaryHeader = <span style=color:#a2f;font-weight:700>true</span>
+    stsSeconds = <span style=color:#666>31536000</span>
+    stsIncludeSubdomains = <span style=color:#a2f;font-weight:700>true</span>
+    stsPreload = <span style=color:#a2f;font-weight:700>true</span>
+    contentTypeNosniff = <span style=color:#a2f;font-weight:700>true</span>
+    browserXssFilter = <span style=color:#a2f;font-weight:700>true</span>
+    referrerPolicy = <span style=color:#b44>&#34;no-referrer&#34;</span>
+    featurePolicy = <span style=color:#b44>&#34;geolocation &#39;none&#39;; camera &#39;none&#39;; microphone &#39;none&#39;&#34;</span>
+    contentSecurityPolicy = <span style=color:#b44>&#34;&#34;&#34;
+</span><span style=color:#b44>      default-src &#39;self&#39; https;
+</span><span style=color:#b44>      script-src &#39;self&#39; &#39;unsafe-inline&#39; cdn.jsdelivr.net ajax.cloudflare.com;
+</span><span style=color:#b44>      style-src &#39;self&#39; &#39;unsafe-inline&#39; cdn.jsdelivr.net cdnjs.cloudflare.com fonts.googleapis.com;
+</span><span style=color:#b44>      font-src &#39;self&#39; cdnjs.cloudflare.com fonts.googleapis.com fonts.gstatic.com;
+</span><span style=color:#b44>      frame-ancestors &#39;self&#39;;
+</span><span style=color:#b44>    &#34;&#34;&#34;</span>
+    [http.middlewares.nextcloudHeaders.headers.customResponseHeaders]
+      Expect<span>-</span>CT = <span style=color:#b44>&#34;max-age=604800, enforce;&#34;</span>
+      X<span>-</span>Permitted<span>-</span>Cross<span>-</span>Domain<span>-</span>Policies = <span style=color:#b44>&#34;none&#34;</span>
+      X<span>-</span>Frame<span>-</span>Options = <span style=color:#b44>&#34;SAMEORIGIN&#34;</span>
+      server = <span style=color:#b44>&#34;Mein Server&#34;</span>
+  [http.middlewares.simpleHeaders.headers]
+    frameDeny = <span style=color:#a2f;font-weight:700>true</span>
+    sslRedirect = <span style=color:#a2f;font-weight:700>true</span>
+    accessControlMaxAge = <span style=color:#666>100</span>
+    addVaryHeader = <span style=color:#a2f;font-weight:700>true</span>
+    stsSeconds = <span style=color:#666>31536000</span>
+    stsIncludeSubdomains = <span style=color:#a2f;font-weight:700>true</span>
+    stsPreload = <span style=color:#a2f;font-weight:700>true</span>
+    contentTypeNosniff = <span style=color:#a2f;font-weight:700>true</span>
+    browserXssFilter = <span style=color:#a2f;font-weight:700>true</span>
+    referrerPolicy = <span style=color:#b44>&#34;no-referrer&#34;</span>
+    featurePolicy = <span style=color:#b44>&#34;geolocation &#39;none&#39;; camera &#39;none&#39;; microphone &#39;none&#39;&#34;</span>
+    contentSecurityPolicy = <span style=color:#b44>&#34;&#34;&#34;
+</span><span style=color:#b44>      default-src &#39;self&#39; https;
+</span><span style=color:#b44>    &#34;&#34;&#34;</span>
+    [http.middlewares.simpleHeaders.headers.customResponseHeaders]
+      Expect<span>-</span>CT = <span style=color:#b44>&#34;max-age=604800, enforce;&#34;</span>
+      X<span>-</span>Permitted<span>-</span>Cross<span>-</span>Domain<span>-</span>Policies = <span style=color:#b44>&#34;none&#34;</span>
+      server = <span style=color:#b44>&#34;Mein Server&#34;</span>
+</code></pre></div><p>Hier definiere ich einige globale wie wichtige <a href=https://docs.traefik.io/middlewares/headers/><code>HTTP Header</code></a>, <a href=https://docs.traefik.io/middlewares/ratelimit/><code>rate limiting</code></a> und <a href=https://docs.traefik.io/middlewares/basicauth/><code>authentification</code></a>.</p><p>Mit diesen Headern sollte man eine <code>A</code>-Bewertung bei Überprüfungen der Security Header haben. Je nachdem wie eure Services arbeiten und worauf sie zugreifen, sollte man Dinge wie <code>contentSecruityPolicy</code> ändern. Die <code>simpleHeaders</code>-Middleware sollte aber bei den meisten Services passen.</p><p>Ein Rätsel könnte das hier sein:</p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-toml data-lang=toml>  [http.middlewares.auth.basicAuth]
+    usersFile = <span style=color:#b44>&#34;/var/passwordfile&#34;</span>
+    removeheader = <span style=color:#a2f;font-weight:700>true</span>
+</code></pre></div><p>Hier definieren wir die <code>middleware</code> mit dem Namen <code>auth</code> und ihr Typ ist <a href=https://docs.traefik.io/middlewares/basicauth/><code>basicAuth</code></a>. Die User, die dann auf die Domains zugreifen können, werden in <code>usersFile</code> definiert.</p><p>Die Daten besteht aus Zeilen von <code>user:hash(password)</code> - also alle Passwörter müssen mit <code>MD5</code>, <code>SHA1</code> oder <code>Bcrypt</code> gehashed sein. Ich nutze <code>Bcrypt</code>, da es vermutlich die beste hashing-methode von den angebotenen ist.</p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>  htpasswd -nbB USER <span style=color:#b44>&#34;PASSWORD&#34;</span> | sed <span style=color:#b44>&#39;/^$/d&#39;</span> &gt;&gt; passwordfile
+</code></pre></div><p>Damit wird eine Datein <code>passwordfile</code> erstellt oder erweitert mit dem <code>USER</code> und dem gehashtem Password. Mit <code>sed</code> entfernen wir einfach nur leere Zeilen aus dem Ergebnis von <code>htpasswd</code>.</p><h2 id=starten-der-services>Starten der Services</h2><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>  docker stack deploy -c nexworking/docker-compose.yaml nextcloud-stack
+
+  docker stack deploy -c zrezai-dev/docker-compose.yaml blog-stack
+
+  docker stack deploy -c traefik/docker-compose.yaml traefik-stack
+
+  docker service rm blog-stack_blog_builder
+</code></pre></div><p>Damit werden nacheinander alle Services gestartet. Es ist nur wichtig, dass <code>traefik</code> zuletzt gestartet wird.</p><h3 id=misc-automatisierung>Misc (Automatisierung)</h3><p>Starten und beenden der <code>docker stacks</code> kann nervig sein, wenn man alles per Hand macht. Daher hier ein kleines Script, was das ganze automatisiert.</p><p><a href=https://taskfile.dev/#/installation><code>Taskfile</code></a> ist ein cooles kleines Tool, was dabei helfen kann solche Aufgaben schnell zu automatisieren.</p><p>Hier ist mein <code>Taskfile.yml</code> - es liegt auf der selben Höhe wie die Ordner.</p><pre><code>version: '2'
+
+tasks:
+  default:
+    desc: Start all services
+    deps:
+      - task: nextcloud
+        vars:
+          CMD: &quot;deploy -c nexworking/docker-compose.yaml&quot;
+      - task: zrezai-dev
+        vars:
+          CMD: &quot;deploy -c zrezai-dev/docker-compose.yaml&quot;
+      - task: vault
+        vars:
+          CMD: &quot;deploy -c vault/docker-compose.yaml&quot;
+    cmds:
+      - task: traefik
+        vars:
+          CMD: &quot;deploy -c traefik/docker-compose.yaml&quot;
+      - task: zrezai-dev-remove-builder
+
+  up:
+    desc: Start all services
+    cmds:
+      - task: default
+
+  down:
+    desc: Stop all services
+    deps:
+      - task: traefik
+        vars:
+          CMD: &quot;rm&quot;
+    cmds:
+      - task: nextcloud
+        vars:
+          CMD: &quot;rm&quot;
+      - task: zrezai-dev
+        vars:
+          CMD: &quot;rm&quot;
+      - task: vault
+        vars:
+          CMD: &quot;rm&quot;
+
+  traefik:
+    desc: Start traefik
+    cmds:
+      - docker stack {{.CMD}} traefik-stack
+    silent: false
+
+  nextcloud:
+    desc: Start Nextcloud
+    cmds:
+      - docker stack {{.CMD}} nextcloud-stack
+
+  zrezai-dev:
+    desc: Start personal blog
+    cmds:
+      - docker stack {{.CMD}} blog-stack
+
+  zrezai-dev-remove-builder:
+    desc: Remove unneeded builder services
+    cmds:
+      - docker service rm blog-stack_blog_builder
+</code></pre><p>Recht primitiv, aber jetzt kann man einfach mit <code>task</code> oder <code>task up</code> alle Stacks in der korrekten Reihenfolge starten & den <code>blog_builder</code> korrekt löschen. Mit <code>task down</code> werden alle <code>stacks</code> wieder beendet & ihre Überreste werden entfernt.</p><hr width=100% id=EOF><p style=color:#777>Zuletzt geändert am 22.08.2020</p></div></div><nav class=post-pagination><a class=newer-posts>Weiter<br>Keine neueren Beiträge.</a>
+<a class=older-posts href=https://zrezai-dev.de/container/docker-teil-3/>Zurück<br>Docker – Teil 3: Eintauchen in komplexere Bereiche</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>Hugo Theme <a href=https://github.com/amazingrise/hugo-theme-diary>Diary</a> von <a href=https://amazingrise.net>Rise</a> ❤️<br>Ported from <a href=https://mak1t0.cc/ target=_blank rel="noreferrer noopener">Makito</a>'s <a href=https://github.com/SumiMakito/hexo-theme-journal/ target=_blank rel="noreferrer noopener">Journal.</a><br><br><div style=font-size:20px><a href=https://github.com/Xcalizorz target=_blank rel="noreferrer noopener" class="fa fa-github"></a><a href=https://www.linkedin.com/in/zadjad-rezai/ target=_blank rel="noreferrer noopener" class="fa fa-linkedin"></a><a href=https://www.xing.com/profile/Zadjad_Rezai/ target=_blank rel="noreferrer noopener" class="fa fa-xing"></a></div>&copy;
+2020 Zadjad Rezai.
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css></div></div><script>let app;app=new Vue({el:'#app',data:{scrollY:0,navOpacity:0,isDrawerOpen:false,mounted:false,isDarkMode:false},methods:{sgn(t,x){let k=1./(1.-2*t);if(x<=t)return 0;else if(x>=1-t)return 1;else{return k*(x-t);}},handleScroll(){this.scrollY=window.scrollY;this.navOpacity=this.sgn(.0,Math.min(1,Math.max(0,window.scrollY/(this.pageHeadHeight()-this.navBarHeight()*0.8))));const{navBar,navBackground,navTitle,extraContainer,streamContainer}=this.$refs;if(this.navOpacity>=1){navBackground.style.opacity=1;navTitle.style.opacity=1;}else{navBackground.style.opacity=0;navTitle.style.opacity=0;}},handleResize(){const{navBar,navBackground,navTitle,extraContainer,streamContainer}=this.$refs;extraContainer.style.left=(streamContainer.offsetWidth-extraContainer.offsetWidth)+'px';},navBarHeight(){return this.$refs.navBar.offsetHeight;},pageHeadHeight(){return this.$refs.pageHead.offsetHeight;},toggleDrawer(){this.isDrawerOpen=!this.isDrawerOpen;document.getElementsByTagName('html')[0].style.overflow=this.isDrawerOpen?'hidden':'unset';},closeDrawer(){this.isDrawerOpen=false;document.getElementsByTagName('html')[0].style.overflow=this.isDrawerOpen?'hidden':'unset';},toggleDarkMode(){this.isDarkMode=!this.isDarkMode;if(this.isDarkMode==true){document.cookie="night=1;path=/";document.body.classList.add("night");}else{document.cookie="night=0;path=/";document.body.classList.remove("night");}}},created(){window.addEventListener('scroll',this.handleScroll);window.addEventListener('resize',this.handleResize);window._nonDesktop=function(){let check=false;(function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4)))check=true;})(navigator.userAgent||navigator.vendor||window.opera);return check;};var night=document.cookie.replace(/(?:(?:^|.*;\s*)night\s*\=\s*([^;]*).*$)|^.*$/,"$1");if(night==""){if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches){}}else{if(night=="1"){this.toggleDarkMode();}}},mounted(){this.handleScroll();this.handleResize();this.mounted=true;},destroyed(){window.removeEventListener('scroll',this.handleScroll);window.removeEventListener('resize',this.handleResize);}});</script><script src=https://zrezai-dev.de//js/journal.js></script><script src=https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js data-cfasync=false></script><script>window.cookieconsent.initialise({"palette":{"popup":{"background":"#237afc"},"button":{"background":"transparent","text":"#fff","border":"#fff"}},"content":{"message":"Diese Website verwendet Cookies, um Ihnen eine bestmögliche Nutzung zu gewährleisten.","dismiss":"Verstanden","link":"Weitere Informationen","href":"https://zrezai-dev.de/datenschutz/"}});</script></body></html>
