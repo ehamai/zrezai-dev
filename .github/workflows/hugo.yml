@@ -1,0 +1,42 @@
+name: Hugo site CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout repository
+      uses: actions/checkout@v2
+    - name: Init. git
+      run: |
+        git config --global user.name "Xcalizorz"
+        git config --global user.email "Xcalizorz@users.noreply.github.com"
+    - name: checkout submodules
+      run: |
+        git config --file .gitmodules --get-regexp url | while read url; do
+          git config --file=.gitmodules $(echo "$url" | sed -E "s/git@github.com:|https:\/\/github.com\//https:\/\/${{ secrets.CI_PAT }}:${{ secrets.CI_PAT }}@github.com\//")
+        done
+        git submodule sync
+        git submodule update --init --recursive
+    - name: Build the site in my hugo container (zrezai-dev.de)
+      run: |
+        docker run \
+        -v ${{ github.workspace }}/dev:/tmp \
+        xcalizorz/hugo:1.0-alpine /bin/sh -c "hugo --minify --baseUrl https://zrezai-dev.de/ --destination html/public"
+
+        git diff --quiet && git diff --staged --quiet || git commit -am "auto(zrezai-dev.de): CI Update"
+    - name: Build the site in my hugo container (server.zrezai-dev.de)
+      run: |
+        docker run \
+        -v ${{ github.workspace }}/dev:/tmp \
+        xcalizorz/hugo:1.0-alpine /bin/sh -c "hugo --minify --baseUrl https://server.zrezai-dev.de/ --destination html/server"
+
+        git diff --quiet && git diff --staged --quiet || git commit -am "auto(server.zrezai-dev.de): CI Update"
+    - name: Push changes
+      run: |
+        git push
+
