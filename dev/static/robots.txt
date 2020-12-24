@@ -1,0 +1,16 @@
+Sitemap: sitemap.xml
+
+User-agent: *
+Disallow: /cgi-bin/
+Disallow: /datenschutz/
+Disallow: /impressum/
+
+User-agent: baiduspider
+User-agent: WebReaper
+User-agent: WebCopier
+User-agent: Offline Explorer
+User-agent: HTTrack
+User-agent: Microsoft.URL.Control
+User-agent: EmailCollector
+User-agent: penthesilea
+Disallow: /
