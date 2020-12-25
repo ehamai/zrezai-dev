@@ -2,7 +2,7 @@ DefaultContentLanguage = "de"
 languageCode = "de-de"
 title = "Zadjad Rezai."
 theme = "diary"
-
+enableEmoji = true
 
 [markup]
   [markup.highlight]
@@ -14,7 +14,7 @@ theme = "diary"
     lineNumbersInTable = true
     noClasses = true
     style = "emacs"
-    tabWidth = 4
+    tabWidth = 2
   [markup.goldmark]
     [markup.goldmark.extensions]
       definitionList = true
@@ -34,7 +34,7 @@ theme = "diary"
       xhtml = false
   [markup.tableOfContents]
     endLevel = 3
-    ordered = false
+    ordered = true
     startLevel = 2
 
 [sitemap]
