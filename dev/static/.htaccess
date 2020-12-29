@@ -1,5 +1,4 @@
-
-#CACHING
+# CACHING
 <IfModule mod_expires.c>
 ExpiresActive On
 ExpiresDefault "access 5 seconds"
@@ -16,7 +15,7 @@ ExpiresByType application/javascript "access 1 year"
 ExpiresByType application/x-javascript "access 1 year"
 </IfModule>
 
-#CACHE-CONTROL, KEEP ALIVE, ETAGS
+# CACHE-CONTROL, KEEP ALIVE, ETAGS
 <IfModule mod_headers.c>
 Header append Cache-Control "public"
 Header append Vary Accept-Encoding
@@ -25,7 +24,7 @@ Header unset ETag
 FileETag None
 </IfModule>
 
-#GZIP
+# GZIP
 <IfModule mod_deflate.c>
 SetOutputFilter DEFLATE
 </IfModule>
@@ -40,5 +39,7 @@ SetOutputFilter DEFLATE
 	Header set Referrer-Policy "same-origin"
 	Header set Feature-Policy "geolocation 'none'; vibrate 'none'"
 	Header set Content-Security-Policy "default-src https:; font-src https: data:; img-src https: data:; script-src https:; style-src https:;"
-
 </IfModule>
+
+# 40X redirects
+ErrorDocument 404 /404.html
