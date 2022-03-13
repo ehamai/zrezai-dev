@@ -21,25 +21,25 @@ jobs:
       run: |
         docker run \
         -v ${{ github.workspace }}/dev:/tmp \
-        xcalizorz/hugo:1.0-alpine /bin/sh -c "hugo --minify --baseUrl https://zrezai-dev.de/ --destination html/public"
+        xcalizorz/hugo:1.0-alpine /bin/sh -c "hugo --minify --baseUrl https://zrezai-dev.de/ --destination html/production"
 
-        tar -zcvf ${{ github.workspace }}/public.tar.gz -C ${{ github.workspace }}/dev/html/public .
+        tar -zcvf ${{ github.workspace }}/production.tar.gz -C ${{ github.workspace }}/dev/html/production .
     - name: 'Upload zrezai-dev.de Artifact'
       uses: actions/upload-artifact@v2
       with:
-        name: public-html
-        path: ${{ github.workspace }}/public.tar.gz
+        name: production-html
+        path: ${{ github.workspace }}/production.tar.gz
         retention-days: 3
-    - name: Build the site in my hugo container (server.zrezai-dev.de)
+    - name: Build the site in my hugo container (staging.zrezai-dev.de)
       run: |
         docker run \
         -v ${{ github.workspace }}/dev:/tmp \
-        xcalizorz/hugo:1.0-alpine /bin/sh -c "hugo --minify --baseUrl https://server.zrezai-dev.de/ --destination html/server"
+        xcalizorz/hugo:1.0-alpine /bin/sh -c "hugo --minify --baseUrl https://staging.zrezai-dev.de/ --destination html/staging"
 
-        tar -zcvf ${{ github.workspace }}/server.tar.gz -C ${{ github.workspace }}/dev/html/server .
-    - name: 'Upload server.zrezai-dev.de Artifact'
+        tar -zcvf ${{ github.workspace }}/staging.tar.gz -C ${{ github.workspace }}/dev/html/staging .
+    - name: 'Upload staging.zrezai-dev.de Artifact'
       uses: actions/upload-artifact@v2
       with:
-        name: server-html
-        path: ${{ github.workspace }}/server.tar.gz
+        name: staging-html
+        path: ${{ github.workspace }}/staging.tar.gz
         retention-days: 3
