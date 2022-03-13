@@ -65,20 +65,21 @@ enableEmoji = true
   bgColor = "#ffffff"
 
 [params]
-  subtitle = "Softwareentwicklung- und Design."
+  subtitle = "DevOps."
   DateForm = "02.01.2006"
   enableReadingTime=true
   favicon = "/img/favicon/favicon.ico"
   mainvideo = "https://i.giphy.com/media/7GHRDluBmx9O8/giphy.webp"
-  description = "Ich bin ein Softwareentwickler mit Liebe zum Detail und komplexen Aufgaben. In meinem Blog schreibe ich über verschiedene Dinge aus dem IT-Umfeld."
+  description = "Ich bin ein DevOps Enginner mit Liebe zum Detail und komplexen Aufgaben. In meinem Blog schreibe ich über verschiedene Dinge aus dem IT-Umfeld."
 
 [taxonomies]
   tag = "tags"
   category = "categories"
 
+
 [[menu.main]]
-  url = "/posts"
-  name = "Archiv"
+  url = "/freelancing"
+  name = "Freelancing"
   weight = 1
 
 [[menu.main]]
@@ -92,9 +93,14 @@ enableEmoji = true
   weight = 3
 
 [[menu.main]]
+  url = "/posts"
+  name = "Archiv"
+  weight = 4
+
+[[menu.main]]
   url = "/index.xml"
   name = "RSS Feed"
-  weight = 4
+  weight = 5
 
 [[menu.main]]
   url = "/datenschutz"

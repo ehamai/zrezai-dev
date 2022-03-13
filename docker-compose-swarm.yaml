@@ -1,0 +1,65 @@
+version: "3.8"
+
+services:
+  blog_builder:
+    image: xcalizorz/hugo:1.0-alpine
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: none
+      labels:
+        - traefik.enable=false
+    volumes:
+      - ./dev:/tmp
+    command: hugo --minify --baseUrl https://server.zrezai-dev.de/ --destination html/server
+    networks:
+      - web
+
+  blog:
+    image: nginx:alpine
+    deploy:
+      replicas: 2
+      placement:
+        max_replicas_per_node: 3
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 50M
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 30s
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.blog.service=blogService
+        - traefik.http.routers.blog.tls=true
+        - traefik.http.routers.blog.tls.certresolver=zrezaiResolver
+        - traefik.http.routers.blog.entrypoints=websecure
+        - traefik.docker.network=web
+        - traefik.http.services.blogService.loadbalancer.server.port=80
+        - traefik.http.services.blogService.loadbalancer.passhostheader=true
+        - traefik.http.services.blogService.loadbalancer.sticky.cookie=true
+        - traefik.http.routers.blog.rule=Host(`server.zrezai-dev.de`)
+        - "traefik.http.routers.blog.middlewares=auth@file, blogHeaders@file, simpleRatelimiter@file, simpleInflightreq@file"
+    depends_on:
+      - blog_builder
+    volumes:
+      - ./dev/public:/usr/share/nginx/html
+    networks:
+      - web
+
+networks:
+  web:
+    driver: overlay
+    name: web
+    driver_opts:
+      encrypted: "true"

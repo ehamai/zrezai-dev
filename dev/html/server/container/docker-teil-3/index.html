@@ -1,0 +1,286 @@
+<!doctype html><html><head><title>Docker – Teil 3: Eintauchen in komplexere Bereiche</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta content="telephone=no" name=format-detection><meta name=description content><meta name=renderer content="webkit"><meta name=theme-color content="#ffffff"><link type=text/css rel=stylesheet href=/vendor/css/bootstrap.min.css><link rel=icon href=https://zrezai-dev.de/img/favicon/favicon.ico><link rel=stylesheet href=https://zrezai-dev.de/scss/journal.min.01b85e0898a781aa780fafeefde8fd126632f5d81889a52aa954a99e5939c759.css integrity="sha256-AbheCJingap4D6/u/ej9EmYy9dgYiaUqqVSpnlk5x1k=" media=screen><link rel=stylesheet href=https://zrezai-dev.de/scss/dark-mode.min.6a0abf23afa30e2c8d048f453f940b7c9a5afae3ed578c66f5169bdf63eb2487.css integrity="sha256-agq/I6+jDiyNBI9FP5QLfJpa+uPtV4xm9Rab32PrJIc=" media=screen><script src=/vendor/js/loadCSS.js></script><script>loadCSS("https://fonts.googleapis.com/css?family=Fira+Mono|Material+Icons");</script><script src=/js/toc.js></script><link rel=stylesheet type=text/css href=css/cookieconsent.min.css></head><body><div id=app><div id=sideContainer class=side-container><a class="a-block nav-head false" href=https://zrezai-dev.de/><div class=nav-title>Zadjad Rezai.</div><div class=nav-subtitle>DevOps.</div></a><div class=nav-link-list><a class="a-block nav-link-item false" href=/freelancing>Freelancing</a>
+<a class="a-block nav-link-item false" href=/categories>Kategorien</a>
+<a class="a-block nav-link-item false" href=/tags>Tags</a>
+<a class="a-block nav-link-item false" href=/posts>Archiv</a>
+<a class="a-block nav-link-item false" href=/index.xml>RSS Feed</a>
+<a class="a-block nav-link-item false" href=/datenschutz>Datenschutz</a>
+<a class="a-block nav-link-item false" href=/impressum>Impressum</a></div><div class=nav-footer>Hugo Theme <a href=https://github.com/amazingrise/hugo-theme-diary>Diary</a> von <a href=https://amazingrise.net>Rise</a> ❤️<br>Adaptiert von <a href=https://mak1t0.cc/ target=_blank rel="noreferrer noopener">Makito</a>'s <a href=https://github.com/SumiMakito/hexo-theme-journal/ target=_blank rel="noreferrer noopener">Journal.</a><br><br><div style=font-size:20px><a style=margin:2px href=https://github.com/Xcalizorz target=_blank rel="noreferrer noopener" class="fa fa-github"></a><a style=margin:2px href=https://www.linkedin.com/in/zadjad-rezai/ target=_blank rel="noreferrer noopener" class="fa fa-linkedin"></a><a style=margin:2px href=https://www.xing.com/profile/Zadjad_Rezai/ target=_blank rel="noreferrer noopener" class="fa fa-xing"></a></div>&copy;
+2022 Zadjad Rezai.
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css></div></div><div id=extraContainer class=extra-container><div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }"><div class=toc-content><center>- INHALTE -</center><ul><ul><li><a href=#docker-funktionsweise onclick="onNavClick(`#docker-funktionsweise-nav`)" id=docker-funktionsweise-nav>Docker Funktionsweise</a></li><li><a href=#erweitern-der-flask-api onclick="onNavClick(`#erweitern-der-flask-api-nav`)" id=erweitern-der-flask-api-nav>Erweitern der Flask API</a></li><li><a href=#docker onclick="onNavClick(`#docker-nav`)" id=docker-nav>Docker</a></li></ul></div></div><div class=pagination><a id=globalBackToTop class="pagination-action animated-visibility" href=#top :class="{ invisible: scrollY == 0 }"><i class="material-icons pagination-action-icon">keyboard_arrow_up</i></a>
+<a type=button class=pagination-action id=darkModeToggleButton><span class="material-icons pagination-action-icon" id=darkModeToggleIcon>dark_mode</span></a></div></div><div class=single-column-drawer-container id=drawer v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }"><div class=drawer-content><div class=drawer-menu><a class="a-block drawer-menu-item false" href=/freelancing>Freelancing</a>
+<a class="a-block drawer-menu-item false" href=/categories>Kategorien</a>
+<a class="a-block drawer-menu-item false" href=/tags>Tags</a>
+<a class="a-block drawer-menu-item false" href=/posts>Archiv</a>
+<a class="a-block drawer-menu-item false" href=/index.xml>RSS Feed</a>
+<a class="a-block drawer-menu-item false" href=/datenschutz>Datenschutz</a>
+<a class="a-block drawer-menu-item false" href=/impressum>Impressum</a><div class=toc><div class=toc-content><center>- INHALTE -</center><ul><ul><li><a href=#docker-funktionsweise onclick="onNavClick(`#docker-funktionsweise-nav`)" id=docker-funktionsweise-nav>Docker Funktionsweise</a></li><li><a href=#erweitern-der-flask-api onclick="onNavClick(`#erweitern-der-flask-api-nav`)" id=erweitern-der-flask-api-nav>Erweitern der Flask API</a></li><li><a href=#docker onclick="onNavClick(`#docker-nav`)" id=docker-nav>Docker</a></li></ul></div></div></div></div></div><transition name=fade><div id=drawer-mask v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if=isDrawerOpen v-on:click=toggleDrawer></div></transition><nav id=navBar class="navbar sticky-top navbar-light single-column-nav-container"><div id=navBackground class=nav-background></div><div class="container container-narrow nav-content"><button id=nav_dropdown_btn class=nav-dropdown-toggle type=button v-on:click=toggleDrawer>
+<i class=material-icons>menu</i></button>
+<a id=navTitle class=navbar-brand href=https://zrezai-dev.de/>Zadjad Rezai.</a>
+<button type=button class=nav-darkmode-toggle id=darkModeToggleButton2>
+<i class=material-icons id=darkModeToggleIcon2>dark_mode</i></button></div></nav><div class=single-column-header-container id=pageHead v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }"><a href=https://zrezai-dev.de/><div class=single-column-header-title>Zadjad Rezai.</div><div class=single-column-header-subtitle>DevOps.</div></a></div><div id=content><div id=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper style=background-image:url(https://zrezai-dev.de/img/docker-3/humpback-whale-whale-marine.webp)><div class=post-title>Docker – Teil 3: Eintauchen in komplexere Bereiche<div class=post-meta><time itemprop=datePublished>31.03.2020 08:29</time>
+<i class=material-icons>folder</i>
+<a href=/categories/>[Container]</a>
+&nbsp;
+<i class=material-icons>label</i>
+<a href=/tags/docker>Docker</a>
+&nbsp;
+<a href=/tags/flask>Flask</a>
+&nbsp;
+<a href=/tags/rest-api>REST API</a>
+&nbsp;
+<i class=material-icons>schedule</i>
+7 min
+53 s.</div></div></div><div class=post-body-wrapper><div class=post-body v-pre><p>Wie in <a rel="noreferrer noopener" aria-label="Teil-2 (öffnet in neuem Tab)" href=https://zrezai-dev.de/container/docker-rest-apis-teil-2/ target=_blank>Teil-2</a> versprochen, tauchen wir diesmal etwas tiefer in Docker ein, verbessern und erweitern unsere App.</p><p>Das <a rel="noreferrer noopener" aria-label="Repository (öffnet in neuem Tab)" href=https://github.com/Xcalizorz/docker-example-restapi target=_blank>Repository</a> basiert jetzt auf verschiedenen Branches, die jeweils mit einem Blogpost zusammen hängen. Aktuell gibt es die Branch <em><a rel="noreferrer noopener" aria-label="step-2 (öffnet in neuem Tab)" href=https://github.com/Xcalizorz/docker-example-restapi/tree/part-2 target=_blank>step-2</a></em>, und <em><a rel="noreferrer noopener" aria-label="step-3 (öffnet in neuem Tab)" href=https://github.com/Xcalizorz/docker-example-restapi/tree/part-3 target=_blank>step-3</a></em> welcher mit Teil 2 bzw. Teil 3 der Docker-Serie zusammenhängen.</p><h2 id=docker-funktionsweise>Docker Funktionsweise</h2><p>In <a rel="noreferrer noopener" aria-label="Teil-1 (öffnet in neuem Tab)" href=https://zrezai-dev.de/container/docker-teil-1-eine-einfuehrung/ target=_blank>Teil-1</a> bin ich teilweise auf die Ziele von Docker eingegangen, jedoch habe ich außen vor gelassen wie das ganze überhaupt funktioniert. Wie kann es sein, dass man isolierte VM-ähnliche Gebilde hat, während man keinen eigenen Kernel braucht?</p><p><mark>Das Problem ist, dass das gar nicht stimmt.</mark></p><p>Docker ist zwar recht isoliert, jedoch nicht auf dem Level einer VM! In den aller meisten Fällen wird das auch unwichtig sein, aber es ist wichtig zu wissen, dass Docker <strong>Linux</strong>-Namespaces nutzt, um einen isolierten Prozess zu simulieren.</p><p>Grundsätzlich sieht der Docker-Alltag so aus, dass ein Docker-Daemon gestartet wird und dieser u. a. für die Erstellung jener isolierten Prozesse zuständig ist. Auf Windows wird dieser Daemon ironischerweise in einer VM gestartet, da ein Linux-Kernel gebraucht wird, um Linux-Namespaces zu nutzen.</p><div style=text-align:center><figure class="aligncenter size-large"><img src=/img/docker-3/docker-intern-1.webp alt class=wp-image-1063><figcaption>Abbildung 1: Docker Daemon erstellt Container</figcaption></figure></div><p>Zur Isolierung werden unter anderem folgende System-interne Möglichkeiten ausgenutzt:</p><blockquote><ul><li>PID namespace — Process identifiers and capabilities</li><li>UTS namespace — Host and domain name</li><li>MNT namespace — Filesystem access and structure</li><li>IPC namespace — Process communication over shared memory</li><li>NET namespace — Network access and structure</li><li>USR namespace — User names and identifiers</li><li>chroot syscall — Controls the location of the filesystem root</li><li>cgroups — Resource protection</li><li>CAP drop — Operating system feature restrictions</li><li>Security modules — Mandatory access controls<br>‒ Docker in Action, Jeff Nickeloff & Stephan Kuenzli, Manning Publications 2019_</li></ul></blockquote><p>Da Docker-Container keinen eigenen Kernel haben, nutzen sie immer den Host-Kernel, um Befehle an die Hardware zu leiten. Dadurch ist Docker nicht ganz so flexibel wie eine VM. Sollte beispielsweise eines der containerisierten Anwendungen eine ganz bestimmte Kernelversion brauchen, wird diese auch nur bei ganz bestimmten Anwendern funktionieren – da wäre wahrscheinlich die Nutzung einer VM anzuraten.</p><h2 id=erweitern-der-flask-api>Erweitern der Flask API</h2><p>Im ersten Schritt, haben wir eine sehr simple Anwendung erstellt. Damit die REST API einfacher erweitert & dokumentiert werden kann, sollten wir <a rel="noreferrer noopener" aria-label="Swagger (öffnet in neuem Tab)" href=https://swagger.io/ target=_blank>Swagger</a> zur Dokumentation nutzen und eine bessere Möglichkeit zur Erstellung von REST APIs nutzen.</p><p>Nach einem ersten Aufteilen, befindet sich der Code jetzt in <code>learn_docker_app/</code>. Um <code>app.py</code> starten zu können, muss unser <code>PYTHONPATH</code> angepasst werden:</p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-shell data-lang=shell><span style=color:#a2f>export</span> <span style=color:#b8860b>PYTHONPATH</span><span style=color:#666>=</span><span style=color:#b44>&#34;{PYTHONPATH}:/path/to/docker-example-restapi&#34;</span>
+</code></pre></div><p>Wir nutzen <code>flask_restx</code>, um unsere <code>REST API</code> zu dokumentieren & diese in verschiedene Namespaces aufzuteilen.
+<code>learn_docker_app/api/__init__.py</code></p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-python data-lang=python><span style=color:#b44>&#34;&#34;&#34;
+</span><span style=color:#b44>A collection of all API namespaces provided by the app.
+</span><span style=color:#b44>If you want to add more namespaces, you need to provide them inside this sub-module
+</span><span style=color:#b44>and add the namespace to the `Api`. Here is an example:
+</span><span style=color:#b44>After creating a new file called `new_api.py` with the following simple content:
+</span><span style=color:#b44>
+</span><span style=color:#b44>  from flask_restx import Namespace
+</span><span style=color:#b44>  new_api_namespace = Namespace(&#39;New API&#39;, description=&#39;Any description.&#39;)
+</span><span style=color:#b44>
+</span><span style=color:#b44>We have to add the new namespace to our `Api` via inserting the following lines into `apis/__init__.py`:
+</span><span style=color:#b44>
+</span><span style=color:#b44>  from .new_api import new_api_namespace
+</span><span style=color:#b44>  api.add_namespace(new_api_namespace, path=&#39;/new/&#39;)
+</span><span style=color:#b44>
+</span><span style=color:#b44>Now, the `New API` can be contacted via `baseurl/new/`
+</span><span style=color:#b44>&#34;&#34;&#34;</span>
+<span style=color:#a2f;font-weight:700>from</span> <span style=color:#00f;font-weight:700>flask_restx</span> <span style=color:#a2f;font-weight:700>import</span> Api
+<span style=color:#a2f;font-weight:700>from</span> <span style=color:#00f;font-weight:700>.respond</span> <span style=color:#a2f;font-weight:700>import</span> respond_namespace
+
+api <span style=color:#666>=</span> Api(
+    version<span style=color:#666>=</span><span style=color:#b44>&#39;1.0&#39;</span>,
+    title<span style=color:#666>=</span><span style=color:#b44>&#39;Learning Docker API&#39;</span>,
+    description<span style=color:#666>=</span><span style=color:#b44>&#39;A simple API created by Zadjad Rezai&#39;</span>,
+)
+
+api<span style=color:#666>.</span>add_namespace(respond_namespace, path<span style=color:#666>=</span><span style=color:#b44>&#39;/respond/&#39;</span>)
+</code></pre></div><p>Ein neues Feature soll dazu kommen - <code>learn_docker_app/tests/test_responses.py</code>. Sobald ein Nutzer über eine <code>GET</code>-Anfrage <code>/respond/hostname</code> aufruft, sollen möglichst der Hostname & das Betriebssystem des Clients sowie des Servers ausgegeben werden. Natürlich, wie immer – zuerst die Tests. 💉</p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-python data-lang=python><span style=color:#a2f;font-weight:700>from</span> <span style=color:#00f;font-weight:700>dataclasses</span> <span style=color:#a2f;font-weight:700>import</span> dataclass
+<span style=color:#a2f;font-weight:700>from</span> <span style=color:#00f;font-weight:700>types</span> <span style=color:#a2f;font-weight:700>import</span> SimpleNamespace
+
+<span style=color:#a2f;font-weight:700>import</span> <span style=color:#00f;font-weight:700>pytest</span>
+
+<span style=color:#a2f;font-weight:700>from</span> <span style=color:#00f;font-weight:700>learn_docker_app.app</span> <span style=color:#a2f;font-weight:700>import</span> create_app
+
+
+<span style=color:#a2f>@pytest.fixture</span>
+<span style=color:#a2f;font-weight:700>def</span> <span style=color:#00a000>client</span>():
+    app <span style=color:#666>=</span> create_app()
+    app<span style=color:#666>.</span>config[<span style=color:#b44>&#39;TESTING&#39;</span>] <span style=color:#666>=</span> True
+
+    <span style=color:#a2f;font-weight:700>with</span> app<span style=color:#666>.</span>test_client() <span style=color:#a2f;font-weight:700>as</span> client:
+        <span style=color:#a2f;font-weight:700>yield</span> client
+
+
+<span style=color:#a2f;font-weight:700>class</span> <span style=color:#00f>TestResponse</span>:
+    <span style=color:#a2f>@staticmethod</span>
+    <span style=color:#a2f;font-weight:700>def</span> <span style=color:#00a000>copy_cat_response</span>(test_string: <span style=color:#a2f>str</span>):
+        <span style=color:#a2f;font-weight:700>return</span> f<span style=color:#b44>&#34;/respond/{test_string}&#34;</span>
+
+    <span style=color:#a2f>@pytest.mark.parametrize</span>(<span style=color:#b44>&#34;test_string&#34;</span>, [
+        <span style=color:#b44>&#34;hi&#34;</span>, <span style=color:#b44>&#34;bye&#34;</span>, <span style=color:#b44>&#34;xxx&#34;</span>, <span style=color:#b44>&#34;123!&#34;</span>, <span style=color:#b44>&#34;-12312&#34;</span>,
+    ])
+    <span style=color:#a2f;font-weight:700>def</span> <span style=color:#00a000>test_simple_response__simple_message</span>(self, client, test_string):
+        response <span style=color:#666>=</span> client<span style=color:#666>.</span>get(self<span style=color:#666>.</span>copy_cat_response(test_string))
+
+        <span style=color:#a2f;font-weight:700>assert</span> response<span style=color:#666>.</span>status_code <span style=color:#666>==</span> <span style=color:#666>200</span>
+        <span style=color:#a2f;font-weight:700>assert</span> response<span style=color:#666>.</span>json <span style=color:#666>==</span> {<span style=color:#b44>&#39;response&#39;</span>: test_string}
+
+    <span style=color:#a2f>@pytest.mark.parametrize</span>(<span style=color:#b44>&#34;test_string&#34;</span>, [
+        <span style=color:#b44>&#34;../&#34;</span>, <span style=color:#b44>&#34;</span><span style=color:#b62;font-weight:700>\\</span><span style=color:#b44>//..&#34;</span>, <span style=color:#b44>&#34;cd ..//&#34;</span>,
+    ])
+    <span style=color:#a2f;font-weight:700>def</span> <span style=color:#00a000>test_simple_response__wrong_url</span>(self, client, test_string):
+        response <span style=color:#666>=</span> client<span style=color:#666>.</span>get(self<span style=color:#666>.</span>copy_cat_response(test_string))
+
+        <span style=color:#a2f;font-weight:700>assert</span> response<span style=color:#666>.</span>status_code <span style=color:#666>==</span> <span style=color:#666>404</span>
+
+    <span style=color:#a2f;font-weight:700>def</span> <span style=color:#00a000>test_hostname</span>(self, client, monkeypatch):
+        monkeypatch<span style=color:#666>.</span>setattr(<span style=color:#b44>&#39;learn_docker_app.api.respond.platform&#39;</span>, MockPlatform)
+        monkeypatch<span style=color:#666>.</span>setattr(<span style=color:#b44>&#39;learn_docker_app.api.respond.request&#39;</span>, MockRequest)
+
+        response <span style=color:#666>=</span> client<span style=color:#666>.</span>get(f<span style=color:#b44>&#34;/respond/hostname&#34;</span>)
+
+        <span style=color:#a2f;font-weight:700>assert</span> response<span style=color:#666>.</span>status_code <span style=color:#666>==</span> <span style=color:#666>200</span>
+        <span style=color:#a2f;font-weight:700>assert</span> response<span style=color:#666>.</span>json <span style=color:#666>==</span> {
+            <span style=color:#b44>&#39;host&#39;</span>: {
+                <span style=color:#b44>&#39;hostname_or_ip&#39;</span>: <span style=color:#b44>&#39;TEST-HOSTNAME&#39;</span>,
+                <span style=color:#b44>&#39;system&#39;</span>: <span style=color:#b44>&#39;TEST-SYSTEM&#39;</span>,
+            },
+            <span style=color:#b44>&#39;client&#39;</span>: {
+                <span style=color:#b44>&#39;hostname_or_ip&#39;</span>: <span style=color:#b44>&#39;TEST-HOSTNAME-CLIENT&#39;</span>,
+                <span style=color:#b44>&#39;system&#39;</span>: <span style=color:#b44>&#39;TEST-SYSTEM-CLIENT&#39;</span>,
+            },
+        }
+
+
+<span style=color:#a2f;font-weight:700>class</span> <span style=color:#00f>MockPlatform</span>:
+    <span style=color:#b44>&#34;&#34;&#34;Will override the builtin platform module&#34;&#34;&#34;</span>
+
+    <span style=color:#a2f>@staticmethod</span>
+    <span style=color:#a2f;font-weight:700>def</span> <span style=color:#00a000>node</span>():
+        <span style=color:#a2f;font-weight:700>return</span> <span style=color:#b44>&#39;TEST-HOSTNAME&#39;</span>
+
+    <span style=color:#a2f>@staticmethod</span>
+    <span style=color:#a2f;font-weight:700>def</span> <span style=color:#00a000>system</span>():
+        <span style=color:#a2f;font-weight:700>return</span> <span style=color:#b44>&#39;TEST-SYSTEM&#39;</span>
+
+
+<span style=color:#a2f>@dataclass</span>
+<span style=color:#a2f;font-weight:700>class</span> <span style=color:#00f>MockRequest</span>:
+    <span style=color:#b44>&#34;&#34;&#34;Will override the flask.request object&#34;&#34;&#34;</span>
+    user_agent <span style=color:#666>=</span> SimpleNamespace(platform<span style=color:#666>=</span><span style=color:#b44>&#39;TEST-SYSTEM-CLIENT&#39;</span>)
+    remote_addr <span style=color:#666>=</span> <span style=color:#b44>&#39;TEST-HOSTNAME-CLIENT&#39;</span>
+</code></pre></div><p>Neu hinzugekommen sind <code>test_hostname()</code> sowie zwei Mock-Klassen, die innerhalb der Tests bestimmte Funktionen bzw. Klassen anpassen sollen. <code>MockPlatform</code> ist ein Mock des internen Moduls <code>platform</code>, welches uns Informationen über den Server liefern kann. <code>MockRequest</code> soll<code>flask.request</code> überschreiben, welches uns Daten über den Client liefern kann.</p><p>Jedes <code>API</code> Namespace wird in einer eigenen <code>.py</code>-Datei definiert und implementiert - z. B. <code>learn_docker_app/api/respond.py</code>.</p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-python data-lang=python><span style=color:#a2f;font-weight:700>import</span> <span style=color:#00f;font-weight:700>platform</span>
+
+<span style=color:#a2f;font-weight:700>from</span> <span style=color:#00f;font-weight:700>flask</span> <span style=color:#a2f;font-weight:700>import</span> request
+<span style=color:#a2f;font-weight:700>from</span> <span style=color:#00f;font-weight:700>flask_restx</span> <span style=color:#a2f;font-weight:700>import</span> fields, Namespace, Resource
+
+respond_namespace <span style=color:#666>=</span> Namespace(
+    <span style=color:#b44>&#39;respond&#39;</span>,
+    description<span style=color:#666>=</span><span style=color:#b44>&#39;Provides operations that generate a simple response.&#39;</span>
+)
+
+copy_cat_model <span style=color:#666>=</span> respond_namespace<span style=color:#666>.</span>model(<span style=color:#b44>&#39;Respond&#39;</span>, {
+    <span style=color:#b44>&#39;response&#39;</span>: fields<span style=color:#666>.</span>String(description<span style=color:#666>=</span><span style=color:#b44>&#39;The string provided.&#39;</span>)
+})
+
+
+<span style=color:#a2f>@respond_namespace.route</span>(<span style=color:#b44>&#39;/&lt;string&gt;&#39;</span>)
+<span style=color:#a2f;font-weight:700>class</span> <span style=color:#00f>Copycat</span>(Resource):
+    <span style=color:#a2f>@respond_namespace.marshal_with</span>(copy_cat_model)
+    <span style=color:#a2f;font-weight:700>def</span> <span style=color:#00a000>get</span>(self, string: <span style=color:#a2f>str</span>):
+        <span style=color:#a2f;font-weight:700>return</span> {
+            <span style=color:#b44>&#39;response&#39;</span>: string,
+        }
+
+
+platform_model <span style=color:#666>=</span> respond_namespace<span style=color:#666>.</span>model(<span style=color:#b44>&#39;Host&#39;</span>, {
+    <span style=color:#b44>&#39;hostname_or_ip&#39;</span>: fields<span style=color:#666>.</span>String(
+        description<span style=color:#666>=</span><span style=color:#b44>&#39;The computer’s network name (may not be fully qualified!) or its ip address.&#39;</span> \
+                    <span style=color:#b44>&#39;An empty string is returned if the value cannot be determined.&#39;</span>
+    ),
+    <span style=color:#b44>&#39;system&#39;</span>: fields<span style=color:#666>.</span>String(
+        description<span style=color:#666>=</span><span style=color:#b44>&#39;Returns the system/OS name, such as &#34;Linux&#34;, &#34;Darwin&#34;, &#39;</span> \
+                    <span style=color:#b44>&#39;&#34;Java&#34;, &#34;Windows&#34;. An empty string is returned if the&#39;</span> \
+                    <span style=color:#b44>&#39;value cannot be determined.&#39;</span>
+    )
+})
+hostname_model <span style=color:#666>=</span> respond_namespace<span style=color:#666>.</span>model(<span style=color:#b44>&#39;Hostname&#39;</span>, {
+    <span style=color:#b44>&#39;host&#39;</span>: fields<span style=color:#666>.</span>Nested(platform_model, description<span style=color:#666>=</span><span style=color:#b44>&#39;Data concerning the API server.&#39;</span>),
+    <span style=color:#b44>&#39;client&#39;</span>: fields<span style=color:#666>.</span>Nested(platform_model, description<span style=color:#666>=</span><span style=color:#b44>&#39;Data concerning the requesting client.&#39;</span>),
+})
+
+
+<span style=color:#a2f>@respond_namespace.route</span>(<span style=color:#b44>&#39;/hostname&#39;</span>)
+<span style=color:#a2f;font-weight:700>class</span> <span style=color:#00f>Hostname</span>(Resource):
+    <span style=color:#a2f>@respond_namespace.marshal_with</span>(hostname_model)
+    <span style=color:#a2f;font-weight:700>def</span> <span style=color:#00a000>get</span>(self):
+        <span style=color:#a2f;font-weight:700>return</span> {
+            <span style=color:#b44>&#39;host&#39;</span>: {
+                <span style=color:#b44>&#39;hostname_or_ip&#39;</span>: platform<span style=color:#666>.</span>node(),
+                <span style=color:#b44>&#39;system&#39;</span>: platform<span style=color:#666>.</span>system(),
+            },
+            <span style=color:#b44>&#39;client&#39;</span>: {
+                <span style=color:#b44>&#39;hostname_or_ip&#39;</span>: request<span style=color:#666>.</span>remote_addr,
+                <span style=color:#b44>&#39;system&#39;</span>: request<span style=color:#666>.</span>user_agent<span style=color:#666>.</span>platform,
+            },
+        }
+</code></pre></div><p>Die <code>Copycat</code>-Klasse übernimmt die Aufgabe der alten <code>simple_response()</code>-Funktion.</p><p>Die <code>Hostname</code>-Klasse erlaubt es uns Information über den Server und den anfragenden Client weiterzugeben. Hier also einmal den Hostnamen oder die IP-Adresse sowie das erkannte Betriebssystem. Dadurch können wir uns anschauen welchen Hostnamen unser Docker-Container hat.</p><p>Da das UTS namespace (Host and domain name) von Docker genutzt wird, um möglichst tiefgreifende Isolierung zu erzielen, sollte jeder Container einen eigene Hostnamen zugewiesen bekommen.</p><p><img src=/img/docker-3/local_2.webp alt></p><p><img src=/img/docker-3/local_2_hostname.webp alt></p><p>Auf unserem Host-PC funktioniert die API einwandfrei. Unser Flask-Server nutzt wieder Port <code>5000</code>.</p><p>Die Ausgabe von <code>/respond/hostname</code> ist:</p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-json data-lang=json>{
+  <span style=color:green;font-weight:700>&#34;host&#34;</span>: {
+    <span style=color:green;font-weight:700>&#34;hostname_or_ip&#34;</span>: <span style=color:#b44>&#34;REDACTED&#34;</span>,
+    <span style=color:green;font-weight:700>&#34;system&#34;</span>: <span style=color:#b44>&#34;windows&#34;</span>
+  },
+  <span style=color:green;font-weight:700>&#34;client&#34;</span>: {
+    <span style=color:green;font-weight:700>&#34;hostname_or_ip&#34;</span>: <span style=color:#b44>&#34;127.0.0.1&#34;</span>,
+    <span style=color:green;font-weight:700>&#34;system&#34;</span>: <span style=color:#b44>&#34;windows&#34;</span>
+  }
+}
+</code></pre></div><h2 id=docker>Docker</h2><p>Wir erweitern unsere <code>.dockerignore</code>-Datei, um weitere unnötige Dateien auszugrenzen:</p><pre><code>**/%appdata%
+**/venv
+**/__pycache__
+
+.idea
+.github
+.devcontainer
+.vscode
+.gitignore
+LICENSE
+*.md
+img
+</code></pre><p>Danach passen wir unser <code>Dockerfile</code> an, damit diese mit der neuen Projekt-Struktur zurechtkommt:</p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-dockerfile data-lang=dockerfile><span style=color:#a2f;font-weight:700>FROM</span><span style=color:#b44> python:3.7.7-alpine</span><span>
+</span><span></span><span style=color:#a2f;font-weight:700>WORKDIR</span><span style=color:#b44> /home/learn_docker_app</span><span>
+</span><span></span><span style=color:#a2f;font-weight:700>ENV</span> PYTHONPATH <span style=color:#b44>&#34;</span><span style=color:#b68;font-weight:700>${</span><span style=color:#b8860b>PYTHONPATH</span><span style=color:#b68;font-weight:700>}</span><span style=color:#b44>:/home&#34;</span><span>
+</span><span></span><span style=color:#a2f;font-weight:700>COPY</span> learn_docker_app ./<span>
+</span><span>
+</span><span></span><span style=color:#a2f;font-weight:700>RUN</span> pip3 install --upgrade pip <span style=color:#b62;font-weight:700>\
+</span><span style=color:#b62;font-weight:700></span>    <span style=color:#666>&amp;&amp;</span> pip3 --disable-pip-version-check --no-cache-dir install -r requirements.txt <span style=color:#b62;font-weight:700>\
+</span><span style=color:#b62;font-weight:700></span>    <span style=color:#666>&amp;&amp;</span> pip3 --disable-pip-version-check --no-cache-dir install -r requirements-test.txt <span style=color:#b62;font-weight:700>\
+</span><span style=color:#b62;font-weight:700></span>    <span style=color:#666>&amp;&amp;</span> rm -rf *.txt <span style=color:#b62;font-weight:700>\
+</span><span style=color:#b62;font-weight:700></span>    <span style=color:#666>&amp;&amp;</span> pytest<span>
+</span><span>
+</span><span></span><span style=color:#a2f;font-weight:700>EXPOSE</span><span style=color:#b44> 5000</span><span>
+</span><span></span><span style=color:#a2f;font-weight:700>ENTRYPOINT</span> [<span style=color:#b44>&#34;python3&#34;</span>, <span style=color:#b44>&#34;app.py&#34;</span>]<span>
+</span></code></pre></div><p>Neu hier ist, dass wir unseren <code>RUN</code>-Befehl in einen Befehl gefasst haben, um möglichst wenig Image-Layer in unserem Build zu haben. So wird die Buildgröße kleingehalten.</p><p>Außerdem ist der <code>ENV</code>-Befehl neu. Dieser definiert Umgebungsvariablen – hier setzen wir unseren <code>PYTHONPATH</code> genau wie vorher auch.</p><p>Docker erstellt aus Optimierungsgründen für jeden Befehl eine eigene Schicht (Layer) – ein isolierter Container, der nur diesen einen Schritt ausführt. Diese einzelnen Container sieht man auch im Buildprozess, siehe unten.</p><p><mark>Nun starten wir den Buildprozess</mark></p><p><code>docker image build --tag xcalizorz/docker-example-restapi:1.1 .</code></p><pre><code class=language-terminal data-lang=terminal>Sending build context to Docker daemon  286.7kB
+Step 1/7 : FROM python:3.7.7-alpine
+3.7.7-alpine: Pulling from library/python
+aad63a933944: Pull complete
+f229563217f5: Pull complete
+71ded8122394: Pull complete
+807d0888ee2e: Pull complete
+95206a02ba21: Pull complete
+Digest: sha256:4a704ebee45695fa91125301e43eee08a85fc984d05cc75650cc66fad7826c56
+Status: Downloaded newer image for python:3.7.7-alpine
+ ---&gt; 7fbc871584eb
+Step 2/7 : WORKDIR /home/learn_docker_app
+ ---&gt; Running in ab4310580790
+Removing intermediate container ab4310580790
+ ---&gt; 6bef8525d882
+Step 3/7 : ENV PYTHONPATH &quot;${PYTHONPATH}:/home&quot;
+ ---&gt; Running in 2141d223dcdd
+Removing intermediate container 2141d223dcdd
+ ---&gt; c1b348453453
+Step 4/7 : COPY learn_docker_app ./
+ ---&gt; 8ad2bc2439b8
+..
+...
+....
+============================= test session starts ==============================
+platform linux -- Python 3.7.7, pytest-5.4.1, py-1.8.1, pluggy-0.13.1
+rootdir: /home/learn_docker_app
+collected 9 items
+
+tests/test_responses.py .........                                        [100%]
+
+============================== 9 passed in 0.20s ===============================
+Removing intermediate container 4cab6203ca5b
+ ---&gt; e681ce2ee7b9
+Step 6/7 : EXPOSE 5000
+ ---&gt; Running in 6c16c40836ac
+Removing intermediate container 6c16c40836ac
+ ---&gt; 3683acd0cad5
+Step 7/7 : ENTRYPOINT [&quot;python3&quot;, &quot;app.py&quot;]
+ ---&gt; Running in c17aed8c3cf9
+Removing intermediate container c17aed8c3cf9
+ ---&gt; 1ac04a07a974
+Successfully built 1ac04a07a974
+Successfully tagged xcalizorz/docker-example-restapi:1.1
+</code></pre><p>Um Platz zu sparen habe ich <code>Step 4</code> und <code>5</code> ausgelassen.</p><p>Die Layer erkennt man z. B. hier:</p><pre><code>Step 6/7 : EXPOSE 5000
+ ---&gt; Running in 6c16c40836ac
+Removing intermediate container 6c16c40836ac
+</code></pre><p><code>6c16c40836ac</code> ist der Container für den Layer, welcher in <code>Step 6</code> genutzt wird.</p><p>Da wir nun auch <code>pytest</code> aufrufen, wird der Buildprozess fehlschlagen, sobald nicht alle Tests fehlerfrei ausgeführt werden konnten. Vielleicht integrieren wir das ganze in Zukunft mit <a href=https://jenkins.io/ target=_blank rel="noreferrer noopener" aria-label="Jenkins (öffnet in neuem Tab)">Jenkins</a> o. ä.?</p><p><mark>Jetzt können wir unseren Container starten</mark></p><p><code>docker container run --detach --publish 8080:5000 --name webserver xcalizorz/docker-example-restapi:1.1</code></p><p>Das ist equivalent zu:</p><p><code>docker run -d -p 8080:5000 --name webserver xcalizorz/docker-example-restapi:1.1</code></p><p>Auf geht’s zu <a rel="noreferrer noopener" aria-label="(öffnet in neuem Tab)" href=http://localhost:8080/ target=_blank>http://localhost:8080/</a></p><p><img src=/img/docker-3/in_docker_2.webp alt></p><p><img src=/img/docker-3/in_docker_2_hostname.webp alt></p><p>Die Ausgabe von <code>/respond/hostname</code> ist jetzt:</p><div class=highlight><pre style=background-color:#f8f8f8;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-json data-lang=json>{
+  <span style=color:green;font-weight:700>&#34;host&#34;</span>: {
+    <span style=color:green;font-weight:700>&#34;hostname_or_ip&#34;</span>: <span style=color:#b44>&#34;82c1788f0d51&#34;</span>,
+    <span style=color:green;font-weight:700>&#34;system&#34;</span>: <span style=color:#b44>&#34;Linux&#34;</span>
+  },
+  <span style=color:green;font-weight:700>&#34;client&#34;</span>: {
+    <span style=color:green;font-weight:700>&#34;hostname_or_ip&#34;</span>: <span style=color:#b44>&#34;172.17.0.1&#34;</span>,
+    <span style=color:green;font-weight:700>&#34;system&#34;</span>: <span style=color:#b44>&#34;windows&#34;</span>
+  }
+}
+</code></pre></div><p>Damit haben wir den Beweis – unser Docker-Container ist in seiner eigenen, isolierten Umgebung.</p><p><code>172.17.0.1</code> ist das sogenannte <a rel="noreferrer noopener" aria-label="default-bridge-network (öffnet in neuem Tab)" href=https://docs.docker.com/network/network-tutorial-standalone/#use-the-default-bridge-network target=_blank>default-bridge-network</a> von Docker.</p><hr width=100% id=EOF><p style=color:#777>Zuletzt bearbeitet am 31.03.2020</p></div></div><nav class=post-pagination><a class=newer-posts href=https://zrezai-dev.de/projekt/traefik-nextcloud-docker-swarm/>Nächste<br>Projekt 1 - Docker Swarm, Traefik, Nextcloud und einiges mehr</a>
+<a class=older-posts href=https://zrezai-dev.de/container/docker-rest-apis-teil-2/>Vorherige<br>Docker – Teil 2: Eigene REST API</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=single-column-footer>Hugo Theme <a href=https://github.com/amazingrise/hugo-theme-diary>Diary</a> von <a href=https://amazingrise.net>Rise</a> ❤️<br>Adaptiert von <a href=https://mak1t0.cc/ target=_blank rel="noreferrer noopener">Makito</a>'s <a href=https://github.com/SumiMakito/hexo-theme-journal/ target=_blank rel="noreferrer noopener">Journal.</a><br><br><div style=font-size:20px><a style=margin:2px href=https://github.com/Xcalizorz target=_blank rel="noreferrer noopener" class="fa fa-github"></a><a style=margin:2px href=https://www.linkedin.com/in/zadjad-rezai/ target=_blank rel="noreferrer noopener" class="fa fa-linkedin"></a><a style=margin:2px href=https://www.xing.com/profile/Zadjad_Rezai/ target=_blank rel="noreferrer noopener" class="fa fa-xing"></a></div>&copy;
+2022 Zadjad Rezai.
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css></div></div><script src=js/cookieconsent.min.js></script><script>window.cookieconsent.initialise({"palette":{"popup":{"background":"#237afc"},"button":{"background":"transparent","text":"#fff","border":"#fff"}},"content":{"message":"Diese Website verwendet Cookies, um Ihnen eine bestmögliche Nutzung zu gewährleisten.","dismiss":"Verstanden","link":"Weitere Informationen","href":"https://zrezai-dev.de/datenschutz/"}});</script><script src=/js/journal.js></script></body></html>
