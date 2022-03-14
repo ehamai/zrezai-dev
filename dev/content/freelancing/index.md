@@ -51,6 +51,6 @@ abgelöst, die es können.
 
 Diesen disruptiven Wandel möchte ich gerne vorantreiben - nicht nur bei Kühne + Nagel, sondern auch
 anderswo. Da jedes Unternehmen seine eigenen Facetten hat, erhoffe ich mir interessante Tech. Stacks
-und Menschen zu helfen, ihre Arbeit effizienter und besser zu machen.
+kennenzulernen und Menschen zu helfen, ihre Arbeit effizienter und besser zu machen.
 
 Bei Interesse findet ihr meine Kontaktdaten im [Impressum](/impressum).

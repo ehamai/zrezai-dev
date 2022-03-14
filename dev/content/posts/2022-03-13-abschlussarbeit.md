@@ -26,7 +26,6 @@ Einige Rechtschreib/Grammatikfehler habe ich im Nachhinein noch entdeckt, aber i
 genau so, wie ich sie damals abgegeben habe.
 
 Wir bieten auch [Ausbildungen bei Kühne und Nagel](https://jobs.kuehne-nagel.com/de/de) an.
-Ich würde mich freuen, wenn ihr mich als Referenz angebt.
 
 ## Dokumentation
 
