@@ -7,7 +7,10 @@ Customize the [config.toml](./dev/config.toml) according to your needs.
 ```shell
 export BASEURL="https://zrezai-dev.de/"
 
-docker run -it --rm -v $(pwd)/dev:/tmp xcalizorz/hugo:1.0-alpine hugo --minify --baseUrl ${BASEURL} --destination html/server
+docker run -it --rm -v $(pwd)/dev:/tmp xcalizorz/hugo:v0.95.0-alpine \
+  hugo --minify \
+  --baseUrl ${BASEURL} \
+  --destination public
 
                    | DE
 -------------------+-----
@@ -21,4 +24,4 @@ docker run -it --rm -v $(pwd)/dev:/tmp xcalizorz/hugo:1.0-alpine hugo --minify -
   Cleaned          |  0
 ```
 
-Now the new files are stored at `dev/html/server`, you can upload them to your server and enjoy. :)
+Now the new files are stored at `dev/public/`, you can upload them to your server and enjoy. :)

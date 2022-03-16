@@ -1,0 +1,16 @@
+{
+    "name": "zrezai-dev.de",
+    "description": "My personal blog",
+    "keywords": [
+      "blog"
+    ],
+    "website": "https://zrezai-dev.de",
+    "repository": "https://github.com/Xcalizorz/zrezai-dev",
+    "stack": "container",
+    "formation": {
+      "web": {
+        "quantity": 2,
+        "size": "free"
+      }
+    }
+  }

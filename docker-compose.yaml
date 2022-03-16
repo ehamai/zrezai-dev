@@ -9,7 +9,6 @@ services:
 
   blog:
     image: nginx:alpine
-    network_mode: host
     depends_on:
       - blog_builder
     volumes:
