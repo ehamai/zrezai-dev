@@ -13,7 +13,15 @@
   X-Content-Security-Policy: "default-src https:; font-src 'self' cdnjs.cloudflare.com fonts.googleapis.com fonts.gstatic.com data:; img-src 'self' i.giphy.com data: https:; script-src 'self' 'unsafe-eval' 'unsafe-inline' static.cloudflareinsights.com cdn.jsdelivr.net ajax.cloudflare.com; style-src 'self' 'unsafe-inline' cdn.jsdelivr.net cdnjs.cloudflare.com fonts.googleapis.com;"
   X-WebKit-CSP: "default-src https:; font-src 'self' cdnjs.cloudflare.com fonts.googleapis.com fonts.gstatic.com data:; img-src 'self' i.giphy.com data: https:; script-src 'self' 'unsafe-eval' 'unsafe-inline' static.cloudflareinsights.com cdn.jsdelivr.net ajax.cloudflare.com; style-src 'self' 'unsafe-inline' cdn.jsdelivr.net cdnjs.cloudflare.com fonts.googleapis.com;"
 
-/static/*
+/js/*
+  Access-Control-Allow-Origin: *
+  X-Robots-Tag: nosnippet
+
+/css/*
+  Access-Control-Allow-Origin: *
+  X-Robots-Tag: nosnippet
+
+/vendor/*
   Access-Control-Allow-Origin: *
   X-Robots-Tag: nosnippet
 
