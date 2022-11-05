@@ -3,6 +3,7 @@ title: 'Projekt 2: Infrastructure as Code - Terraform'
 author: Zadjad Rezai
 type: post
 date: 2022-10-11T10:00:00+00:00
+draft: true
 excerpt: 'IaC - ein häufig genutzter Begriff mit Beispielen erläutert. Am Beispiel von Terraform als IaC tool.'
 url: /projekt/2/infra-as-code/terraform
 featured_image: /img/infra-as-code/terraform.webp  # TODO add image

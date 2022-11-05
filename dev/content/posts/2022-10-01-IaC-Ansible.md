@@ -3,6 +3,7 @@ title: 'Projekt 2: Infrastructure as Code - Ansible'
 author: Zadjad Rezai
 type: post
 date: 2022-10-11T10:00:00+00:00
+draft: true
 excerpt: 'IaC - ein häufig genutzter Begriff mit Beispielen erläutert. Am Beispiel von Ansible als configurations management tool.'
 url: /projekt/2/infra-as-code/ansible
 featured_image: /img/infra-as-code/ansible.webp  # TODO add image
