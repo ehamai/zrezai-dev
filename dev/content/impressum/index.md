@@ -18,13 +18,11 @@ eael_transient_elements:
 
 Inhaltlich verantwortlich i.S.d. § 55 Abs. 2 RStV:
 
-<div style="margin:15px;">
-Zadjad Rezai<br>
-Sandkampweg 1<br>
-22111 Hamburg
-</div>
-
-<zadjad@zrezai-dev.de>
+> Zadjad Rezai<br>
+> Sandkampweg 1<br>
+> 22111 Hamburg<br>
+> 
+> [zadjad@zrezai-dev.de](mailto:zadjad@zrezai-dev.de)
 
 ### Haftungsausschluss
 
