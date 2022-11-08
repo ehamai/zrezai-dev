@@ -21,8 +21,8 @@ Inhaltlich verantwortlich i.S.d. § 55 Abs. 2 RStV:
 > Zadjad Rezai<br>
 > Sandkampweg 1<br>
 > 22111 Hamburg<br>
-> 
-> [zadjad@zrezai-dev.de](mailto:zadjad@zrezai-dev.de)
+> <br>
+> <zadjad@zrezai-dev.de>
 
 ### Haftungsausschluss
 

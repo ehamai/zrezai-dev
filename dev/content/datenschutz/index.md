@@ -14,13 +14,12 @@ eael_transient_elements:
 					  
 Diese Datenschutzerklärung soll die Nutzer dieser Website über die Art, den Umfang und den Zweck der Erhebung und Verwendung personenbezogener Daten durch den Webseitenbetreiber:
 
-<div style="margin:15px;">
-Zadjad Rezai<br>
-<a href=mailto:zadjad@zrezai-dev.de>zadjad@zrezai-dev.de</a> <br>
-Sandkampweg 1<br>
-22111 Hamburg<br>
-0178 5200719
-</div>
+> Zadjad Rezai<br>
+> Sandkampweg 1<br>
+> 22111 Hamburg<br>
+> +49 176 83238323<br>
+> <br>
+> <zadjad@zrezai-dev.de>
 
 informieren.
   
@@ -101,6 +100,6 @@ Sie haben als Nutzer das Recht, auf Antrag eine kostenlose Auskunft darüber zu 
 
 Nutzer dieser Webseite können von ihrem Widerspruchsrecht Gebrauch machen und der Verarbeitung ihrer personenbezogenen Daten zu jeder Zeit widersprechen. 
 
-Wenn Sie eine Berichtigung, Sperrung, Löschung oder Auskunft über die zu Ihrer Person gespeicherten personenbezogenen Daten wünschen oder Fragen bzgl. der Erhebung, Verarbeitung oder Verwendung Ihrer personenbezogenen Daten haben oder erteilte Einwilligungen widerrufen möchten, wenden Sie sich bitte an folgende E-Mail-Adresse: <zadjad@zrezai-dev.de> 
+Wenn Sie eine Berichtigung, Sperrung, Löschung oder Auskunft über die zu Ihrer Person gespeicherten personenbezogenen Daten wünschen oder Fragen bzgl. der Erhebung, Verarbeitung oder Verwendung Ihrer personenbezogenen Daten haben oder erteilte Einwilligungen widerrufen möchten, wenden Sie sich bitte an folgende E-Mail-Adresse: <zadjad@zrezai-dev.de>.
 
 Sofern Ihr Wunsch nicht mit einer gesetzlichen Pflicht zur Aufbewahrung von Daten (z. B. Vorratsdatenspeicherung) kollidiert, haben Sie ein Anrecht auf Löschung Ihrer Daten. Von uns gespeicherte Daten werden, sollten sie für ihre Zweckbestimmung nicht mehr vonnöten sein und es keine gesetzlichen Aufbewahrungsfristen geben, gelöscht. Falls eine Löschung nicht durchgeführt werden kann, da die Daten für zulässige gesetzliche Zwecke erforderlich sind, erfolgt eine Einschränkung der Datenverarbeitung. In diesem Fall werden die Daten gesperrt und nicht für andere Zwecke verarbeitet.
