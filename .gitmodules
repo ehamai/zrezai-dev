@@ -1,3 +1,4 @@
 [submodule "dev/themes/diary"]
 	path = dev/themes/diary
 	url = git@github.com:zadjadr/hugo-theme-diary.git
+	branch = main
