@@ -6,7 +6,8 @@ date: 2019-10-29T20:56:27+00:00
 excerpt: 'Der Walrus-Operator ist mein persönliches Highlight, da ich ihn immer gebraucht habe - nur vorher wusste ich nicht wie sehr ich ihn gebraucht habe.'
 url: /python/walrus-operator/
 featured_image: /img/tusk.webp
-cover: /img/tusk.webp
+cover:
+  image: /img/tusk.webp
 eael_transient_elements:
   - 'a:0:{}'
 eael_uid:

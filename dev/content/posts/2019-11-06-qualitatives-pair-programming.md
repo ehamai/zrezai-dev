@@ -6,7 +6,8 @@ date: 2019-11-06T18:10:09+00:00
 excerpt: Qualität sichern, indem zwei kluge Köpfe gemeinsam an einem Problem arbeiten.
 url: /methodik/qualitatives-pair-programming/
 featured_image: /img/hacker.webp
-cover: /img/hacker.webp
+cover:
+  image: /img/hacker.webp
 eael_transient_elements:
   - 'a:0:{}'
 site-sidebar-layout:

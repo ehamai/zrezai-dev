@@ -6,7 +6,8 @@ date: 2020-03-25T20:16:33+00:00
 excerpt: 'Docker ist eine interessante technische Entwicklung, welche uns zeigt, dass wir uns aktuell in jeder Ebene in die selbe Richtung bewegen - immer weiter in die Abstraktion von Komplexität.'
 url: /container/docker-teil-1-eine-einfuehrung/
 featured_image: /img/31518965950_1b75084023_o-scaled.webp
-cover: /img/31518965950_1b75084023_o-scaled.webp
+cover:
+  image: /img/31518965950_1b75084023_o-scaled.webp
 eael_transient_elements:
   - 'a:0:{}'
 site-sidebar-layout:

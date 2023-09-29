@@ -7,7 +7,8 @@ draft: true
 excerpt: 'IaC - ein häufig genutzter Begriff mit Beispielen erläutert. Am Beispiel von Terraform als IaC tool.'
 url: /projekt/2/infra-as-code/terraform
 featured_image: /img/infra-as-code/terraform.webp  # TODO add image
-cover: /img/infra-as-code/terraform.webp  # TODO add image
+cover:
+  image: /img/infra-as-code/terraform.webp  # TODO add image
 categories:
   - Projekt
   - Methodik
