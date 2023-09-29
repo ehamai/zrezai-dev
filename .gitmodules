@@ -2,3 +2,6 @@
 	path = dev/themes/diary
 	url = git@github.com:zadjadr/hugo-theme-diary.git
 	branch = main
+[submodule "dev/themes/PaperMod"]
+	path = dev/themes/PaperMod
+	url = https://github.com/adityatelange/hugo-PaperMod.git
