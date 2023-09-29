@@ -95,7 +95,7 @@ enableEmoji = true
 
   [[params.socialIcons]]
   name = "Github"
-  url = "github.com/zadjadr"
+  url = "https://github.com/zadjadr"
 
   [[params.socialIcons]]
   name = "LinkedIn"
