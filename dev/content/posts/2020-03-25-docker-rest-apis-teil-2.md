@@ -6,6 +6,7 @@ date: 2020-03-25T20:16:43+00:00
 excerpt: Um die Simplizität von Docker zu erläutern, möchte ich eine kleine Python-Anwendung erstellen, welche wir über Docker veröffentlichen und nutzen können. Der Code sollte ab Python 3.6 funktionieren und ist auf meinem Github-Repo einsehbar.
 url: /container/docker-rest-apis-teil-2/
 featured_image: https://i.giphy.com/media/RiHcR76mXBUT6/giphy.webp
+cover: https://i.giphy.com/media/RiHcR76mXBUT6/giphy.webp
 eael_transient_elements:
   - 'a:0:{}'
 site-sidebar-layout:

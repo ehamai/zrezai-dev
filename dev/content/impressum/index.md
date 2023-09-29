@@ -4,6 +4,7 @@ author: Zadjad Rezai
 type: about
 date: 2019-02-13T11:42:47+00:00
 dontshow: true
+searchHidden: true
 categories:
   - Meta
 eael_transient_elements:

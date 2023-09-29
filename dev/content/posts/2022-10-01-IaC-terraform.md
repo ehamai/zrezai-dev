@@ -7,6 +7,7 @@ draft: true
 excerpt: 'IaC - ein häufig genutzter Begriff mit Beispielen erläutert. Am Beispiel von Terraform als IaC tool.'
 url: /projekt/2/infra-as-code/terraform
 featured_image: /img/infra-as-code/terraform.webp  # TODO add image
+cover: /img/infra-as-code/terraform.webp  # TODO add image
 categories:
   - Projekt
   - Methodik
@@ -59,7 +60,7 @@ export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 Obligatorisch:
 
 ```bash
-> terraform version       
+> terraform version
 
 Terraform v1.3.0
 on linux_amd64
@@ -279,7 +280,7 @@ resource "aws_launch_template" "default_webserver" {
     tags = {
       Environment = var.environment
     }
-  } 
+  }
 }
 
 resource "aws_instance" "web" {

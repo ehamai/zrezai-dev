@@ -4,6 +4,9 @@ title = "Zadjad Rezai."
 theme = "PaperMod"
 enableEmoji = true
 
+[outputs]
+  home = ['html', 'amp', 'rss']
+
 [markup]
   [markup.highlight]
     codeFences = true
@@ -71,6 +74,21 @@ enableEmoji = true
   favicon = "/img/favicon/favicon.ico"
   mainvideo = "https://i.giphy.com/media/7GHRDluBmx9O8/giphy.webp"
   description = "Ich bin ein DevOps Enginner mit Liebe zum Detail und komplexen Aufgaben. In meinem Blog schreibe ich über verschiedene Dinge aus dem IT-Umfeld."
+  ShowReadingTime = true
+
+  [params.homeInfoParams]
+  Title = "Site Reliability Engineer"
+  Content = "🚀"
+
+  [[params.socialIcons]]
+  name = "Github"
+  url = "github.com/zadjadr"
+
+  [[params.socialIcons]]
+  name = "LinkedIn"
+  url = "https://linkedin.com/in/zadjad-rezai"
+
+
 
 [taxonomies]
   tag = "tags"

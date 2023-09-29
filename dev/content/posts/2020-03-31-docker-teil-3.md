@@ -6,6 +6,7 @@ date: 2020-03-31T08:29:42+00:00
 excerpt: In Teil-1 bin ich teilweise auf die Ziele von Docker eingegangen, jedoch habe ich außen vor gelassen wie das ganze überhaupt funktioniert. Wie kann es sein, dass man isolierte VM-ähnliche Gebilde hat, während man keinen eigenen Kernel braucht?
 url: /container/docker-teil-3/
 featured_image: /img/docker-3/humpback-whale-whale-marine.webp
+cover: /img/docker-3/humpback-whale-whale-marine.webp
 eael_transient_elements:
   - 'a:0:{}'
 site-sidebar-layout:

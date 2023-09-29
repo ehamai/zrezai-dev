@@ -2,6 +2,7 @@
 title: Datenschutzerklärung
 author: Zadjad Rezai
 type: page
+searchHidden: true
 categories:
   - Meta
 eael_transient_elements:

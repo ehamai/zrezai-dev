@@ -6,6 +6,7 @@ date: 2019-11-06T18:10:09+00:00
 excerpt: Qualität sichern, indem zwei kluge Köpfe gemeinsam an einem Problem arbeiten.
 url: /methodik/qualitatives-pair-programming/
 featured_image: /img/hacker.webp
+cover: /img/hacker.webp
 eael_transient_elements:
   - 'a:0:{}'
 site-sidebar-layout:
@@ -28,7 +29,7 @@ tags:
   Wer so wie die Person auf dem Bild arbeitet, sollte sich diesen Beitrag dringend durchlesen.
 </mark></p>
 
-<a rel="noreferrer noopener" href="https://en.wikipedia.org/wiki/Pair_programming" target="_blank"><em>Pair Programming</em></a> _wird in vielen Ebenen der Enterprise-Software-Entwicklung genutzt, gelebt, geliebt und manchmal auch gehasst._ 
+<a rel="noreferrer noopener" href="https://en.wikipedia.org/wiki/Pair_programming" target="_blank"><em>Pair Programming</em></a> _wird in vielen Ebenen der Enterprise-Software-Entwicklung genutzt, gelebt, geliebt und manchmal auch gehasst._
 
 Ein schönes Werkzeuge der agilen Software-Entwicklung bildet das Pair Programming, mit seinem intelligenten Ansatz das &#8222;Vier-Augen-Prinzip&#8220; auf eine geistig anstrengende Aufgabe anzuwenden.
 
@@ -38,7 +39,7 @@ Eine interessante wissenschaftliche Arbeit liefert folgendes Ergebnis: <a href="
 
 Dieser Blog-Post soll auf gar keinen Fall ein Affront gegen die deutsche Industrie sein &#8211; sie hat unglaublich viel geleistet und &#8222;Made in Germany&#8220; erst zu einem Ausdruck von Qualität und Sicherheit gemacht &#8211; jedoch muss sie sich den neuen Gegebenheiten stellen und Dinge auch anders angehen.
 
-Viele traditionelle deutsche Unternehmen haben eigene Bereiche, die sich mit neuen Technologien befassen. Als Beispiel erster Schritte sehe ich die <a href="https://www.draeger.com/en_corp/About-Draeger/Innovation/Innovation-Stories" target="_blank" rel="noreferrer noopener" aria-label=" (öffnet in neuem Tab)">Garage des Drägerwerks in Lübeck</a>. 
+Viele traditionelle deutsche Unternehmen haben eigene Bereiche, die sich mit neuen Technologien befassen. Als Beispiel erster Schritte sehe ich die <a href="https://www.draeger.com/en_corp/About-Draeger/Innovation/Innovation-Stories" target="_blank" rel="noreferrer noopener" aria-label=" (öffnet in neuem Tab)">Garage des Drägerwerks in Lübeck</a>.
 
 Zurück zum Thema: Pair Programming ist eine schon recht &#8222;alte&#8220; Herangehensweise an Probleme. Diese Herangehensweise unterstützt agile Teams dabei wahres Continuous Delivery zu erbringen, indem man Dinge wie festen Code Ownership, unklare Veränderungen und lange, oft technisch unattraktive Pull Requests verhindet.
 

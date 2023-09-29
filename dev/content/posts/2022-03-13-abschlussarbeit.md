@@ -6,6 +6,7 @@ date: 2022-03-13T08:29:42+00:00
 excerpt: ''
 url: /abschlussarbeit
 featured_image: /img/abschlussarbeit/draeger.svg
+cover: /img/abschlussarbeit/draeger.svg
 categories:
   - Projekt
 tags:

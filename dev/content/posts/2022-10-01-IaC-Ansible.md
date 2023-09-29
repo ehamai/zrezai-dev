@@ -7,6 +7,7 @@ draft: true
 excerpt: 'IaC - ein häufig genutzter Begriff mit Beispielen erläutert. Am Beispiel von Ansible als configurations management tool.'
 url: /projekt/2/infra-as-code/ansible
 featured_image: /img/infra-as-code/ansible.webp  # TODO add image
+cover: /img/infra-as-code/ansible.webp  # TODO add image
 categories:
   - Projekt
   - Methodik
@@ -148,7 +149,7 @@ In den `roles` ist der tatsächliche Code versteckt, welcher ausgeführt wird. S
 - name: Configure webservers and deploy application code
   hosts: webservers
   remote_user: "{{ user }}"
-  roles: 
+  roles:
     - webservers
 ```
 
@@ -261,11 +262,11 @@ PLAY [Configure webservers and deploy application code] ************************
 
 TASK [Gathering Facts] ***********************************************************************************************************************************
 [WARNING]: Platform linux on host 3.70.99.43 is using the discovered Python interpreter at /usr/bin/python3.7, but future installation of another Python
-interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-core/2.13/reference_appendices/interpreter_discovery.html for     
+interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-core/2.13/reference_appendices/interpreter_discovery.html for
 more information.
 ok: [3.70.99.43]
 [WARNING]: Platform linux on host 3.71.179.254 is using the discovered Python interpreter at /usr/bin/python3.7, but future installation of another
-Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-core/2.13/reference_appendices/interpreter_discovery.html  
+Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-core/2.13/reference_appendices/interpreter_discovery.html
 for more information.
 ok: [3.71.179.254]
 
@@ -309,7 +310,7 @@ changed: [3.70.99.43]
 changed: [3.71.179.254]
 
 PLAY RECAP ***********************************************************************************************************************************************
-3.70.99.43                 : ok=9    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+3.70.99.43                 : ok=9    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 3.71.179.254               : ok=9    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
 

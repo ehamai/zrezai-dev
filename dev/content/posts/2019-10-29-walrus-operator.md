@@ -6,6 +6,7 @@ date: 2019-10-29T20:56:27+00:00
 excerpt: 'Der Walrus-Operator ist mein persönliches Highlight, da ich ihn immer gebraucht habe - nur vorher wusste ich nicht wie sehr ich ihn gebraucht habe.'
 url: /python/walrus-operator/
 featured_image: /img/tusk.webp
+cover: /img/tusk.webp
 eael_transient_elements:
   - 'a:0:{}'
 eael_uid:
@@ -30,11 +31,11 @@ PEP 572 beschreibt die <a href="https://www.python.org/dev/peps/pep-0572/#id9" t
   <p>
     In most contexts where arbitrary Python expressions can be used, a&nbsp;<strong>named expression</strong>&nbsp;can appear. This is of the form&nbsp;NAME := expr&nbsp;where&nbsp;expr&nbsp;is any valid Python expression other than an unparenthesized tuple, and&nbsp;NAME&nbsp;is an identifier.
   </p>
-  
+
   <p><br>
     The value of such a named expression is the same as the incorporated expression, with the additional side-effect that the target is assigned that value:
   </p>
-  
+
   <cite><a href="https://www.python.org/dev/peps/pep-0572/#id9" target="_blank" rel="noreferrer noopener" aria-label=" (öffnet in neuem Tab)"><br>‒ PEP 572 # Syntax and semantics</a></cite>
 </blockquote>
 
