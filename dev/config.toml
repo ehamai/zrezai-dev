@@ -81,9 +81,17 @@ enableEmoji = true
   ShowPostNavLinks = true
   ShowCodeCopyButtons = true
 
-  [params.homeInfoParams]
-  Title = "Site Reliability Engineer"
-  Content = "🚀"
+  [params.profileMode]
+  enabled = true
+  subtitle = "🚀"
+  imageUrl = "/img/profile.jpg"
+  imageTitle = "Zadjad Rezai"
+  imageWidth = 120
+  imageHeight = 120
+
+  [[params.profileMode.buttons]]
+  name = "Blog"
+  url = "/posts"
 
   [[params.socialIcons]]
   name = "Github"
