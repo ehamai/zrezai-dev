@@ -5,17 +5,13 @@ type: about
 date: 2019-02-13T11:42:47+00:00
 dontshow: true
 searchHidden: true
+ShowBreadCrumbs: false
 categories:
   - Meta
 eael_transient_elements:
   - 'a:0:{}'
 
 ---
-# Impressum
-
-</p>
-
-## Impressum
 
 Inhaltlich verantwortlich i.S.d. § 55 Abs. 2 RStV:
 

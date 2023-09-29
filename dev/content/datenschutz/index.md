@@ -3,14 +3,13 @@ title: Datenschutzerklärung
 author: Zadjad Rezai
 type: page
 searchHidden: true
+ShowBreadCrumbs: false
 categories:
   - Meta
 eael_transient_elements:
   - 'a:0:{}'
 
 ---
-# Datenschutz
-
 ## Grundlegendes
 
 Diese Datenschutzerklärung soll die Nutzer dieser Website über die Art, den Umfang und den Zweck der Erhebung und Verwendung personenbezogener Daten durch den Webseitenbetreiber:

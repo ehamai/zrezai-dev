@@ -75,6 +75,11 @@ enableEmoji = true
   mainvideo = "https://i.giphy.com/media/7GHRDluBmx9O8/giphy.webp"
   description = "Ich bin ein DevOps Enginner mit Liebe zum Detail und komplexen Aufgaben. In meinem Blog schreibe ich über verschiedene Dinge aus dem IT-Umfeld."
   ShowReadingTime = true
+  ShowToc = true
+  TocOpen = true
+  ShowBreadCrumbs = true
+  ShowPostNavLinks = true
+  ShowCodeCopyButtons = true
 
   [params.homeInfoParams]
   Title = "Site Reliability Engineer"
@@ -107,7 +112,7 @@ enableEmoji = true
 
 [[menu.main]]
   url = "/posts"
-  name = "Archiv"
+  name = "Blog"
   weight = 3
 
 [[menu.main]]
