@@ -86,8 +86,8 @@ enableEmoji = true
   subtitle = "🚀"
   imageUrl = "/img/profile.jpg"
   imageTitle = "Zadjad Rezai"
-  imageWidth = 120
-  imageHeight = 120
+  imageWidth = 360
+  imageHeight = 340
 
   [[params.profileMode.buttons]]
   name = "Blog"
