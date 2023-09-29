@@ -20,8 +20,8 @@ eael_transient_elements:
 Inhaltlich verantwortlich i.S.d. § 55 Abs. 2 RStV:
 
 > Zadjad Rezai<br>
-> Sandkampweg 1<br>
-> 22111 Hamburg<br>
+> Pezolddamm 156<br>
+> 22159 Hamburg<br>
 > <br>
 > <me@zops.top>
 

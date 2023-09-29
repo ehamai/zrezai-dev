@@ -16,8 +16,8 @@ eael_transient_elements:
 Diese Datenschutzerklärung soll die Nutzer dieser Website über die Art, den Umfang und den Zweck der Erhebung und Verwendung personenbezogener Daten durch den Webseitenbetreiber:
 
 > Zadjad Rezai<br>
-> Sandkampweg 1<br>
-> 22111 Hamburg<br>
+> Pezolddamm 156<br>
+> 22159 Hamburg<br>
 > +49 176 83238323<br>
 > <br>
 > <me@zops.top>
