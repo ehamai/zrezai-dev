@@ -22,13 +22,13 @@ tags:
   - REST API
 
 ---
-Wie in <a rel="noreferrer noopener" aria-label="Teil-2 (öffnet in neuem Tab)" href="https://zrezai-dev.de/container/docker-rest-apis-teil-2/" target="_blank">Teil-2</a> versprochen, tauchen wir diesmal etwas tiefer in Docker ein, verbessern und erweitern unsere App.
+Wie in <a rel="noreferrer noopener" aria-label="Teil-2 (öffnet in neuem Tab)" href="https://zops.top/container/docker-rest-apis-teil-2/" target="_blank">Teil-2</a> versprochen, tauchen wir diesmal etwas tiefer in Docker ein, verbessern und erweitern unsere App.
 
 Das <a rel="noreferrer noopener" aria-label="Repository (öffnet in neuem Tab)" href="https://github.com/zadjadr/docker-example-restapi" target="_blank">Repository</a> basiert jetzt auf verschiedenen Branches, die jeweils mit einem Blogpost zusammen hängen. Aktuell gibt es die Branch _<a rel="noreferrer noopener" aria-label="step-2 (öffnet in neuem Tab)" href="https://github.com/zadjadr/docker-example-restapi/tree/part-2" target="_blank">step-2</a>_, und _<a rel="noreferrer noopener" aria-label="step-3 (öffnet in neuem Tab)" href="https://github.com/zadjadr/docker-example-restapi/tree/part-3" target="_blank">step-3</a>_ welcher mit Teil 2 bzw. Teil 3 der Docker-Serie zusammenhängen.
 
 ## Docker Funktionsweise
 
-In <a rel="noreferrer noopener" aria-label="Teil-1 (öffnet in neuem Tab)" href="https://zrezai-dev.de/container/docker-teil-1-eine-einfuehrung/" target="_blank">Teil-1</a> bin ich teilweise auf die Ziele von Docker eingegangen, jedoch habe ich außen vor gelassen wie das ganze überhaupt funktioniert. Wie kann es sein, dass man isolierte VM-ähnliche Gebilde hat, während man keinen eigenen Kernel braucht?
+In <a rel="noreferrer noopener" aria-label="Teil-1 (öffnet in neuem Tab)" href="https://zops.top/container/docker-teil-1-eine-einfuehrung/" target="_blank">Teil-1</a> bin ich teilweise auf die Ziele von Docker eingegangen, jedoch habe ich außen vor gelassen wie das ganze überhaupt funktioniert. Wie kann es sein, dass man isolierte VM-ähnliche Gebilde hat, während man keinen eigenen Kernel braucht?
 
 <p>
   <mark>Das Problem ist, dass das gar nicht stimmt.</mark>

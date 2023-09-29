@@ -2,44 +2,44 @@ name: Hugo site CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: checkout repository
-      uses: actions/checkout@v2
-    - name: checkout submodules
-      run: |
-        git config --file .gitmodules --get-regexp url | while read url; do
-          git config --file=.gitmodules $(echo "$url" | sed -E "s/git@github.com:|https:\/\/github.com\//https:\/\/${{ secrets.CI_PAT }}:${{ secrets.CI_PAT }}@github.com\//")
-        done
-        git submodule sync
-        git submodule update --init --recursive
-    - name: Build the site in my hugo container (zrezai-dev.de)
-      run: |
-        docker run \
-        -v ${{ github.workspace }}/dev:/tmp \
-        xcalizorz/hugo:1.0-alpine /bin/sh -c "hugo --minify --baseUrl https://zrezai-dev.de/ --destination html/production"
+      - name: checkout repository
+        uses: actions/checkout@v2
+      - name: checkout submodules
+        run: |
+          git config --file .gitmodules --get-regexp url | while read url; do
+            git config --file=.gitmodules $(echo "$url" | sed -E "s/git@github.com:|https:\/\/github.com\//https:\/\/${{ secrets.CI_PAT }}:${{ secrets.CI_PAT }}@github.com\//")
+          done
+          git submodule sync
+          git submodule update --init --recursive
+      - name: Build the site in my hugo container (zops.top)
+        run: |
+          docker run \
+          -v ${{ github.workspace }}/dev:/tmp \
+          xcalizorz/hugo:1.0-alpine /bin/sh -c "hugo --minify --baseUrl https://zops.top/ --destination html/production"
 
-        tar -zcvf ${{ github.workspace }}/production.tar.gz -C ${{ github.workspace }}/dev/html/production .
-    - name: 'Upload zrezai-dev.de Artifact'
-      uses: actions/upload-artifact@v2
-      with:
-        name: production-html
-        path: ${{ github.workspace }}/production.tar.gz
-        retention-days: 3
-    - name: Build the site in my hugo container (staging.zrezai-dev.de)
-      run: |
-        docker run \
-        -v ${{ github.workspace }}/dev:/tmp \
-        xcalizorz/hugo:1.0-alpine /bin/sh -c "hugo --minify --baseUrl https://staging.zrezai-dev.de/ --destination html/staging"
+          tar -zcvf ${{ github.workspace }}/production.tar.gz -C ${{ github.workspace }}/dev/html/production .
+      - name: "Upload zops.top Artifact"
+        uses: actions/upload-artifact@v2
+        with:
+          name: production-html
+          path: ${{ github.workspace }}/production.tar.gz
+          retention-days: 3
+      - name: Build the site in my hugo container (staging.zops.top)
+        run: |
+          docker run \
+          -v ${{ github.workspace }}/dev:/tmp \
+          xcalizorz/hugo:1.0-alpine /bin/sh -c "hugo --minify --baseUrl https://staging.zops.top/ --destination html/staging"
 
-        tar -zcvf ${{ github.workspace }}/staging.tar.gz -C ${{ github.workspace }}/dev/html/staging .
-    - name: 'Upload staging.zrezai-dev.de Artifact'
-      uses: actions/upload-artifact@v2
-      with:
-        name: staging-html
-        path: ${{ github.workspace }}/staging.tar.gz
-        retention-days: 3
+          tar -zcvf ${{ github.workspace }}/staging.tar.gz -C ${{ github.workspace }}/dev/html/staging .
+      - name: "Upload staging.zops.top Artifact"
+        uses: actions/upload-artifact@v2
+        with:
+          name: staging-html
+          path: ${{ github.workspace }}/staging.tar.gz
+          retention-days: 3

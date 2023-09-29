@@ -23,9 +23,9 @@ tags:
 
 ---
 
-Um die Simplizität von Docker zu erläutern, möchte ich eine kleine Python-Anwendung erstellen, welche wir über Docker veröffentlichen und nutzen können. Der Code sollte ab Python 3.6 funktionieren und ist auf <a href="https://github.com/zadjadr/docker-example-restapi/tree/part-2" target="_blank" rel="noreferrer noopener" aria-label=" (öffnet in neuem Tab)">meinem Github-Repo</a> einsehbar. Für eine Einführung in 
+Um die Simplizität von Docker zu erläutern, möchte ich eine kleine Python-Anwendung erstellen, welche wir über Docker veröffentlichen und nutzen können. Der Code sollte ab Python 3.6 funktionieren und ist auf <a href="https://github.com/zadjadr/docker-example-restapi/tree/part-2" target="_blank" rel="noreferrer noopener" aria-label=" (öffnet in neuem Tab)">meinem Github-Repo</a> einsehbar. Für eine Einführung in
 
-`Flask`, schaut euch <a href="https://flask.palletsprojects.com/en/1.1.x/tutorial/#tutorial" target="_blank" rel="noreferrer noopener" aria-label=" (öffnet in neuem Tab)">das offizielle Tutorial</a> an. 
+`Flask`, schaut euch <a href="https://flask.palletsprojects.com/en/1.1.x/tutorial/#tutorial" target="_blank" rel="noreferrer noopener" aria-label=" (öffnet in neuem Tab)">das offizielle Tutorial</a> an.
 
 Im ersten Schritt soll nur eine simple `API` geschrieben werden, welche beim Aufrufen von `/response/<string>` den angegeben String als Antwort zurücksenden.
 
@@ -87,7 +87,7 @@ In Zeile 6 bis 11 erstellen wir einen `Flask`-Testclient und nutzen diesen, um u
   1. Nutzer übergibt eine akzeptierte Nachricht ein `test_simple_response__simple_message`
   2. Nutzer gibt etwas nicht akzeptables ein `test_simple_response__wrong_url`
 
-In Szenario 1 wird als Rückmeldung eine `JSON`-Antwort erwartet, welche so aussieht: `{'response': test_string}`  
+In Szenario 1 wird als Rückmeldung eine `JSON`-Antwort erwartet, welche so aussieht: `{'response': test_string}`
 Im zweiten Szenario wird ein `404-Fehler` erwartet.
 
 ## REST API
@@ -110,7 +110,7 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
 ```
 
-In `Flask` kann man natürlich auch klassenbasiert arbeiten, aber so wie es jetzt ist, ist es erstmal in Ordnung.  
+In `Flask` kann man natürlich auch klassenbasiert arbeiten, aber so wie es jetzt ist, ist es erstmal in Ordnung.
 Unsere `API` erlaubt eine `GET` Anfrage an `/respond/<string>` und kreiert eine `JSON`-Antwort mit dem Inhalt `{response: string}`
 
 Nun können wir unsere App via Python starten: `python app/app.py`
@@ -179,7 +179,7 @@ Eine `.dockerignore`-Datei funktioniert wie eine `.gitignore`-Datei &#8211; alle
   <mark>docker build</mark>
 </p>
 
-Jetzt können wir endlich anfangen zu bauen. Insgesamt wurden nur zwei Dateien mit zusammen 10 Zeilen Code hinzugefügt.  
+Jetzt können wir endlich anfangen zu bauen. Insgesamt wurden nur zwei Dateien mit zusammen 10 Zeilen Code hinzugefügt.
 Nun geht es endlich in eine Shell-Umgebung (tty, powershell, etc.)
 
 ```terminal
@@ -326,6 +326,6 @@ Damit haben wir einen Container, der über `Port 8080` unseres Host-Computers er
 
 Später wird die Anwendung erweitert und wir tauchen tiefer in die Materie der Container-Welt ein.
 
- [1]: https://zrezai-dev.de/methodik/warum-tdd/
+ [1]: https://zops.top/methodik/warum-tdd/
  [2]: https://hub.docker.com/_/python
  [3]: https://docs.docker.com/engine/reference/builder/#dockerignore-file

@@ -22,7 +22,7 @@ Inhaltlich verantwortlich i.S.d. § 55 Abs. 2 RStV:
 > Sandkampweg 1<br>
 > 22111 Hamburg<br>
 > <br>
-> <zadjad@zrezai-dev.de>
+> <me@zops.top>
 
 ### Haftungsausschluss
 

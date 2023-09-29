@@ -1,16 +1,16 @@
 {
-    "name": "zrezai-dev.de",
-    "description": "My personal blog",
-    "keywords": [
-      "blog"
-    ],
-    "website": "https://zrezai-dev.de",
-    "repository": "https://github.com/zadjadr/zrezai-dev",
-    "stack": "container",
-    "formation": {
-      "web": {
-        "quantity": 2,
-        "size": "free"
-      }
+  "name": "zops.top",
+  "description": "My personal blog",
+  "keywords": [
+    "blog"
+  ],
+  "website": "https://zops.top",
+  "repository": "https://github.com/zadjadr/zrezai-dev",
+  "stack": "container",
+  "formation": {
+    "web": {
+      "quantity": 2,
+      "size": "free"
     }
   }
+}

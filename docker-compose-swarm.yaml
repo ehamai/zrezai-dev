@@ -16,7 +16,7 @@ services:
         - traefik.enable=false
     volumes:
       - ./dev:/tmp
-    command: hugo --minify --baseUrl https://server.zrezai-dev.de/ --destination html/server
+    command: hugo --minify --baseUrl https://server.zops.top/ --destination html/server
     networks:
       - web
 
@@ -48,7 +48,7 @@ services:
         - traefik.http.services.blogService.loadbalancer.server.port=80
         - traefik.http.services.blogService.loadbalancer.passhostheader=true
         - traefik.http.services.blogService.loadbalancer.sticky.cookie=true
-        - traefik.http.routers.blog.rule=Host(`server.zrezai-dev.de`)
+        - traefik.http.routers.blog.rule=Host(`server.zops.top`)
         - "traefik.http.routers.blog.middlewares=auth@file, blogHeaders@file, simpleRatelimiter@file, simpleInflightreq@file"
     depends_on:
       - blog_builder

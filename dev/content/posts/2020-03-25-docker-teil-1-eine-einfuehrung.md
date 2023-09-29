@@ -44,7 +44,7 @@ Beim Schreiben der ersten Anwendungen, stellen viele fest, dass es enorm aufwend
 
 Im Grunde möchte gute Software <a href="https://martinfowler.com/ieeeSoftware/coupling.pdf" target="_blank" rel="noreferrer noopener" aria-label=" (öffnet in neuem Tab)">Kopplungen niedrig halten</a> und <a href="https://stackoverflow.com/questions/10830135/what-is-high-cohesion-and-how-to-use-it-make-it" target="_blank" rel="noreferrer noopener" aria-label=" (öffnet in neuem Tab)">Kohäsion stärken</a>.
 
-Dieses Konzept, bekannt in der Softwareentwicklung, lässt sich natürlich u. a. auf das Konzept von virtuellen Maschinen (VMs) übertragen. So merkt man, dass die Welt auch hier wieder ganz ähnlich aussieht. 
+Dieses Konzept, bekannt in der Softwareentwicklung, lässt sich natürlich u. a. auf das Konzept von virtuellen Maschinen (VMs) übertragen. So merkt man, dass die Welt auch hier wieder ganz ähnlich aussieht.
 
 Früher hat man eine VM gehabt, welche für eine bestimmte Software verantwortlich war &#8211; beispielsweise hat man eine VM, welche eine Datenbank betreibt. Braucht mehr mehr Datenbanken, muss man eine neue VM erstellen &#8211; und das dauert vergleichsweise lange.
 
@@ -58,7 +58,7 @@ Eine VM ist damit sehr ineffizient und sollte heutzutage nur genutzt werden, wen
 
 In Abbildung 1 erkennt man einen ungefähren Aufbau einer VM-Architektur. Die Hardware wurde durch die Virtualisierung weg abstrahiert, weshalb eine VM seinen Kernel (Guest OS), die jeweiligen Abhängigkeiten und natürlich den Code oder die Software benötigt, die man darauf laufen lassen möchte.
 
-Wenn man das Prinzip von [DRY][1] auf dieses Bild anwendet, erkennt man, dass der **Kernel** eine Sache ist, die sich wiederholt, aber eigentlich nicht wirklich etwas mit der Dienstleistung zu tun hat, die man liefern möchte. Man sollte diese also separieren können, um nicht unnötig Resourcen zu verschwenden. 
+Wenn man das Prinzip von [DRY][1] auf dieses Bild anwendet, erkennt man, dass der **Kernel** eine Sache ist, die sich wiederholt, aber eigentlich nicht wirklich etwas mit der Dienstleistung zu tun hat, die man liefern möchte. Man sollte diese also separieren können, um nicht unnötig Resourcen zu verschwenden.
 
 <p>
   <mark>Container kommen zur Rettung</mark>
@@ -72,6 +72,6 @@ Nun sollte es eindeutig geworden sein, dass eine VM-Architektur ein fundamentale
 
 Durch die Abstraktion des Kernels/des Betriebssystems, tritt man in eine Welt ein, die schnellere Bereitstellungen, einfache Weitergabe und höhere Skalierbarkeit erlaubt.
 
-Bevor wir zu tief in die Details gehen, können wir es <a href="https://zrezai-dev.de/container/docker-rest-apis-teil-2" target="_blank" rel="noreferrer noopener" aria-label=" (öffnet in neuem Tab)">einfach ausprobieren</a>.
+Bevor wir zu tief in die Details gehen, können wir es <a href="https://zops.top/container/docker-rest-apis-teil-2" target="_blank" rel="noreferrer noopener" aria-label=" (öffnet in neuem Tab)">einfach ausprobieren</a>.
 
  [1]: https://martinfowler.com/ieeeSoftware/repetition.pdf

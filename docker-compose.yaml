@@ -5,7 +5,7 @@ services:
     image: xcalizorz/hugo:1.0-alpine
     volumes:
       - ./dev:/tmp
-    command: hugo --minify --baseUrl https://zrezai-dev.de/ --destination html/server
+    command: hugo --minify --baseUrl https://zops.top/ --destination html/server
 
   blog:
     image: nginx:alpine
