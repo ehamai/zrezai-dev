@@ -71,7 +71,6 @@ enableEmoji = true
   subtitle = "DevOps."
   DateForm = "02.01.2006"
   enableReadingTime=true
-  favicon = "/img/favicon/favicon.ico"
   mainvideo = "https://i.giphy.com/media/7GHRDluBmx9O8/giphy.webp"
   description = "Ich bin ein DevOps Enginner mit Liebe zum Detail und komplexen Aufgaben. In meinem Blog schreibe ich über verschiedene Dinge aus dem IT-Umfeld."
   ShowReadingTime = true
@@ -89,6 +88,14 @@ enableEmoji = true
   imageWidth = 300
   imageHeight = 300
 
+  [params.assets]
+  disableHLJS = false
+  disableFingerprinting = true
+  favicon = "/img/favicon/favicon.ico"
+  favicon16x16 = "/img/favicon/favicon-16x16.png"
+  favicon32x32 = "/img/favicon/favicon-32x32.png"
+  apple_touch_icon = "/img/favicon/apple-touch-icon.png"
+
   [[params.profileMode.buttons]]
   name = "Blog"
   url = "/posts"
@@ -100,7 +107,6 @@ enableEmoji = true
   [[params.socialIcons]]
   name = "LinkedIn"
   url = "https://linkedin.com/in/zadjad-rezai"
-
 
 
 [taxonomies]
