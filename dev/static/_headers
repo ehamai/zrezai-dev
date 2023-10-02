@@ -24,18 +24,18 @@
 
 # Security headers
 /*
-  Access-Control-Allow-Credentials: "true"
-  X-Frame-Options: "SAMEORIGIN"
-  X-Powered-By: "Zadjad Rezai."
-  Server: "Zadjad Rezai."
-  X-XSS-Protection: "1; mode=block"
-  X-Content-Type-Options: "nosniff"
-  Strict-Transport-Security: "max-age=63072000; includeSubDomains"
-  Referrer-Policy: "strict-origin"
-  Permissions-Policy: "geolocation=(), vibrate=(), microphone=(), payment=()"
-  Content-Security-Policy: "default-src https:; font-src 'self' cdnjs.cloudflare.com fonts.googleapis.com fonts.gstatic.com data:; img-src 'self' i.giphy.com data: https:; script-src 'self' 'unsafe-eval' 'unsafe-inline' static.cloudflareinsights.com cdn.jsdelivr.net ajax.cloudflare.com; style-src 'self' 'unsafe-inline' cdn.jsdelivr.net cdnjs.cloudflare.com fonts.googleapis.com;"
-  X-Content-Security-Policy: "default-src https:; font-src 'self' cdnjs.cloudflare.com fonts.googleapis.com fonts.gstatic.com data:; img-src 'self' i.giphy.com data: https:; script-src 'self' 'unsafe-eval' 'unsafe-inline' static.cloudflareinsights.com cdn.jsdelivr.net ajax.cloudflare.com; style-src 'self' 'unsafe-inline' cdn.jsdelivr.net cdnjs.cloudflare.com fonts.googleapis.com;"
-  X-WebKit-CSP: "default-src https:; font-src 'self' cdnjs.cloudflare.com fonts.googleapis.com fonts.gstatic.com data:; img-src 'self' i.giphy.com data: https:; script-src 'self' 'unsafe-eval' 'unsafe-inline' static.cloudflareinsights.com cdn.jsdelivr.net ajax.cloudflare.com; style-src 'self' 'unsafe-inline' cdn.jsdelivr.net cdnjs.cloudflare.com fonts.googleapis.com;"
+  Access-Control-Allow-Credentials: true
+  X-Frame-Options: SAMEORIGIN
+  X-Powered-By: Zadjad Rezai.
+  Server: Zadjad Rezai.
+  X-XSS-Protection: 1; mode=block
+  X-Content-Type-Options: nosniff
+  Strict-Transport-Security: max-age=63072000; includeSubDomains
+  Referrer-Policy: strict-origin
+  Permissions-Policy: geolocation=(), vibrate=(), microphone=(), payment=()
+  Content-Security-Policy: default-src https:; font-src 'self' cdnjs.cloudflare.com fonts.googleapis.com fonts.gstatic.com data:; img-src 'self' i.giphy.com data: https:; script-src 'self' 'unsafe-eval' 'unsafe-inline' static.cloudflareinsights.com cdn.jsdelivr.net ajax.cloudflare.com; style-src 'self' 'unsafe-inline' cdn.jsdelivr.net cdnjs.cloudflare.com fonts.googleapis.com;
+  X-Content-Security-Policy: default-src https:; font-src 'self' cdnjs.cloudflare.com fonts.googleapis.com fonts.gstatic.com data:; img-src 'self' i.giphy.com data: https:; script-src 'self' 'unsafe-eval' 'unsafe-inline' static.cloudflareinsights.com cdn.jsdelivr.net ajax.cloudflare.com; style-src 'self' 'unsafe-inline' cdn.jsdelivr.net cdnjs.cloudflare.com fonts.googleapis.com;
+  X-WebKit-CSP: default-src https:; font-src 'self' cdnjs.cloudflare.com fonts.googleapis.com fonts.gstatic.com data:; img-src 'self' i.giphy.com data: https:; script-src 'self' 'unsafe-eval' 'unsafe-inline' static.cloudflareinsights.com cdn.jsdelivr.net ajax.cloudflare.com; style-src 'self' 'unsafe-inline' cdn.jsdelivr.net cdnjs.cloudflare.com fonts.googleapis.com;
 
 https://:project.pages.dev/*
   X-Robots-Tag: noindex
