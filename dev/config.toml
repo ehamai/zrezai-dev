@@ -83,8 +83,9 @@ enableEmoji = true
   [params.profileMode]
   enabled = true
   imageUrl = "/img/profile.webp"
-  imageTitle = "🚀"
-  subtitle = ""
+  imageTitle = "Zadjad Rezai."
+  title = ""
+  subtitle = "🚀"
   imageWidth = 300
   imageHeight = 300
 
