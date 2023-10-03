@@ -82,15 +82,14 @@ enableEmoji = true
 
   [params.profileMode]
   enabled = true
-  subtitle = "🚀"
   imageUrl = "/img/profile.webp"
-  imageTitle = "Zadjad Rezai"
+  imageTitle = "🚀"
+  subtitle = ""
   imageWidth = 300
   imageHeight = 300
 
   [params.label]
   icon = "/img/favicon/logo.webp"
-  text = ""
 
   [params.assets]
   disableHLJS = false
