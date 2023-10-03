@@ -88,6 +88,10 @@ enableEmoji = true
   imageWidth = 300
   imageHeight = 300
 
+  [params.label]
+  icon = "/img/favicon/logo.webp"
+  text = "Zadjad Rezai."
+
   [params.assets]
   disableHLJS = false
   disableFingerprinting = true
