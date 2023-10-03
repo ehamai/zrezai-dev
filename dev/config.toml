@@ -89,15 +89,15 @@ enableEmoji = true
   imageHeight = 300
 
   [params.label]
-  icon = "/img/favicon/logo.webp"
+  icon = "/img/logo.webp"
 
   [params.assets]
   disableHLJS = false
   disableFingerprinting = true
   favicon = "/img/favicon/favicon.ico"
-  favicon16x16 = "/img/favicon/favicon-16x16.png"
-  favicon32x32 = "/img/favicon/favicon-32x32.png"
-  apple_touch_icon = "/img/favicon/apple-touch-icon.png"
+  favicon16x16 = "/img/favicon/favicon-16x16.webp"
+  favicon32x32 = "/img/favicon/favicon-32x32.webp"
+  apple_touch_icon = "/img/favicon/apple-touch-icon.webp"
 
   [[params.profileMode.buttons]]
   name = "Blog"
