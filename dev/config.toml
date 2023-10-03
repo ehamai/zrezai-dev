@@ -90,7 +90,7 @@ enableEmoji = true
 
   [params.label]
   icon = "/img/favicon/logo.webp"
-  text = "Zadjad Rezai."
+  text = ""
 
   [params.assets]
   disableHLJS = false
