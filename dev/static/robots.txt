@@ -1,4 +1,4 @@
-Sitemap: sitemap.xml
+Sitemap: https://zops.top/sitemap.xml
 
 User-agent: *
 Disallow: /cgi-bin/
