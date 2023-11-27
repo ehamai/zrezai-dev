@@ -5,7 +5,7 @@ ARG BASE_URL
 WORKDIR /app/dev
 COPY dev /app/dev/
 
-RUN hugo --minify --baseUrl ${BASE_URL} --destination public
+RUN hugo --minify --baseUrl azure-test.zops.top --destination public
 
 FROM nginx:1.21
 
